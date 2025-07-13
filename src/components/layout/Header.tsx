@@ -1,5 +1,6 @@
 import logo from '@/assets/logo-fox.svg';
 import React from 'react';
+import ErrorButton from './ErrorButton';
 
 class Header extends React.Component {
   render(): React.JSX.Element {
@@ -19,9 +20,7 @@ class Header extends React.Component {
             <a className="mr-5 hover:text-gray-900"></a>
             <a className="mr-5 hover:text-gray-900"></a>
           </nav>
-          <button className="inline-flex items-center bg-gray-100 text-black border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 hover:cursor-pointer rounded text-base mt-4 md:mt-0">
-            Button
-          </button>
+          <ErrorButton></ErrorButton>
         </div>
       </header>
     );

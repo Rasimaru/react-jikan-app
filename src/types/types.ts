@@ -41,3 +41,7 @@ export type CardItem = {
     from: string;
   };
 };
+
+export type ErrorButtonState = {
+  shouldThrow: boolean;
+};
