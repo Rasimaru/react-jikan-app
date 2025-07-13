@@ -4,9 +4,7 @@ import Hero from './components/hero/Hero';
 import CardList from './components/catalog/CardList';
 import type { AppState } from './types/types';
 import Spinner from './components/layout/Spinner';
-
-const defaultUrl = 'https://api.jikan.moe/v4/top/anime?type=tv&filter=airing&page=1';
-const baseUrl = 'https://api.jikan.moe/v4/anime?q=';
+import { API_SEARCH, API_TOP_AIRING } from './types/constants';
 
 class App extends React.Component<object, AppState> {
   state: AppState = {
@@ -18,46 +16,35 @@ class App extends React.Component<object, AppState> {
 
   componentDidMount(): void {
     const query = localStorage.getItem('searchQuery') || '';
-
     this.setState({ searchQuery: query }, () => {
-      const url = query !== '' ? `${baseUrl}${encodeURIComponent(query)}` : defaultUrl;
-      this.setState({ isLoading: true });
-      fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => this.setState({ items: data.data }))
-        .catch((error: Error) => {
-          console.error(error);
-          this.setState({ error: error.message });
-        })
-        .finally(() => this.setState({ isLoading: false }));
+      this.fetchData(this.state.searchQuery);
     });
   }
 
   componentDidUpdate(_: object, prevState: AppState): void {
     if (prevState.searchQuery !== this.state.searchQuery) {
-      const query = this.state.searchQuery;
-      const url = query !== '' ? `${baseUrl}${encodeURIComponent(query)}` : defaultUrl;
-
-      this.setState({ isLoading: true });
-      fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => this.setState({ items: data.data }))
-        .catch((error: Error) => {
-          console.error(error);
-          this.setState({ error: error.message });
-        })
-        .finally(() => this.setState({ isLoading: false }));
+      this.fetchData(this.state.searchQuery);
     }
+  }
+
+  fetchData(query: string): void {
+    const url = query !== '' ? `${API_SEARCH}?q=${encodeURIComponent(query)}` : API_TOP_AIRING;
+
+    this.setState({ isLoading: true, error: null });
+
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Request error: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => this.setState({ items: data.data }))
+      .catch((error: Error) => {
+        console.error(error);
+        this.setState({ error: error.message });
+      })
+      .finally(() => this.setState({ isLoading: false }));
   }
 
   handleSearch = (query: string): void => {
@@ -73,7 +60,7 @@ class App extends React.Component<object, AppState> {
         {isLoading ? (
           <Spinner />
         ) : error ? (
-          <p>Search Error: {this.state.error}</p>
+          <p>Request Error: {this.state.error}</p>
         ) : isEmpty ? (
           <p className="text-center text-[18px]">
             Nothing found matching &quot;{searchQuery}&quot;

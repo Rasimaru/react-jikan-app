@@ -9,7 +9,7 @@ class Card extends React.Component<CardProps> {
     return (
       <a href="#" className="hover:scale-102 duration-300">
         <div className="flex flex-col border-1 rounded-xl overflow-clip relative h-full">
-          <div className="aspect-[2/3] relative">
+          <div className="aspect-[3/4] relative">
             <img
               alt={title}
               loading="lazy"
@@ -17,7 +17,7 @@ class Card extends React.Component<CardProps> {
               className="absolute w-full h-full object-cover"
             />
           </div>
-          <div className="flex flex-col grow p-3 self-start justify-between text-left">
+          <div className="flex flex-col grow gap-1 p-3 self-start justify-between text-left">
             <h3 className="font-medium text-sm line-clamp-2">{title}</h3>
             <p className="text-xs text-muted-foreground">{year ?? 'TBD'}</p>
           </div>
