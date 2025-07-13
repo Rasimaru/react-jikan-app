@@ -1,28 +1,50 @@
-import React, { type JSX } from 'react';
+import React from 'react';
 import Layout from '@/components/layout/Layout';
+import Hero from './components/hero/Hero';
+import CardList from './components/catalog/CardList';
+import type { AppState } from './types/types';
 
-class App extends React.Component {
-  state = {
+const defaultUrl = 'https://api.jikan.moe/v4/top/anime?type=tv&filter=airing&page=1';
+const baseUrl = 'https://api.jikan.moe/v4/anime?q=';
+
+class App extends React.Component<object, AppState> {
+  state: AppState = {
     items: [],
-    searchField: ''
+    searchQuery: ''
   };
 
   componentDidMount(): void {
-    fetch('https://api.jikan.moe/v4/top/anime?filter=airing&page=1')
-      .then((response) => response.json())
-      .then((data) => this.setState({ items: data }));
+    const query = localStorage.getItem('searchQuery') || '';
+
+    this.setState({ searchQuery: query }, () => {
+      const url = query !== '' ? `${baseUrl}${encodeURIComponent(query)}` : defaultUrl;
+
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => this.setState({ items: data.data }));
+    });
   }
 
-  render(): JSX.Element {
+  componentDidUpdate(_: object, prevState: AppState): void {
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      const query = this.state.searchQuery;
+      const url = query !== '' ? `${baseUrl}${encodeURIComponent(query)}` : defaultUrl;
+
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => this.setState({ items: data.data }));
+    }
+  }
+
+  handleSearch = (query: string): void => {
+    this.setState({ searchQuery: query });
+  };
+
+  render(): React.JSX.Element {
     return (
       <Layout>
-        <section className="hero flex flex-col gap-4">
-          <h2 className="text-5xl">Discover Your Next Adventure</h2>
-          <p className="text-lg text-center">
-            Track, discover, and discuss your favorite anime and manga all in one place.
-          </p>
-        </section>
-        <section></section>
+        <Hero onSearch={this.handleSearch} searchQuery={this.state.searchQuery}></Hero>
+        <CardList items={this.state.items} />
       </Layout>
     );
   }
