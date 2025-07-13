@@ -4,7 +4,7 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 class Fallback extends React.Component {
   render() {
     return (
-      <section className="text-center flex flex-col justify-start items-center gap-4 h-full">
+      <section className="text-center grow flex flex-col justify-center items-center gap-4 h-full">
         <DotLottieReact
           src="./Fox-fall.lottie"
           loop
