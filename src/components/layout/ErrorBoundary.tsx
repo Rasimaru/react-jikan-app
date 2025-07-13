@@ -1,4 +1,6 @@
 import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
 
 export type BoundaryProps = {
   children: React.ReactNode;
@@ -23,7 +25,13 @@ class ErrorBoundary extends React.Component<BoundaryProps, BoundaryState> {
   }
   render() {
     if (this.state.hasError) {
-      return this.props.fallback;
+      return (
+        <div className="container px-5 flex flex-col items-center justify-center text-center mx-auto light:bg-gray-100 text-black dark:text-white min-h-full">
+          <Header />
+          {this.props.fallback}
+          <Footer />
+        </div>
+      );
     }
 
     return this.props.children;

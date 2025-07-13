@@ -6,7 +6,7 @@ class Header extends React.Component {
   render(): React.JSX.Element {
     return (
       <header className="text-black dark:text-white body-font w-full">
-        <div className="mx-auto flex flex-wrap py-5 flex-col md:flex-row items-center">
+        <div className="mx-auto flex flex-wrap py-5 flex-col min-[20rem]:flex-row items-center justify-between">
           <a
             href="#"
             className="flex gap-2 title-font font-medium items-center md:justify-start justify-center "
@@ -14,12 +14,6 @@ class Header extends React.Component {
             <img src={logo} alt={logo} width={50} height={50} />
             <h1 className="text-3xl">Jikan</h1>
           </a>
-          <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-            <a className="mr-5 hover:text-gray-900"></a>
-            <a className="mr-5 hover:text-gray-900"></a>
-            <a className="mr-5 hover:text-gray-900"></a>
-            <a className="mr-5 hover:text-gray-900"></a>
-          </nav>
           <ErrorButton></ErrorButton>
         </div>
       </header>

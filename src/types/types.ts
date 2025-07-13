@@ -3,6 +3,8 @@ import type { ReactNode } from 'react';
 export type AppState = {
   items: CardItem[];
   searchQuery: string;
+  isLoading: boolean;
+  error: string | null;
 };
 
 export type CardListProps = {
