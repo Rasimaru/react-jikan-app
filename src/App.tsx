@@ -2,9 +2,10 @@ import React from 'react';
 import Layout from '@/components/layout/Layout';
 import Hero from './components/hero/Hero';
 import CardList from './components/catalog/CardList';
-import type { AppState } from './types/types';
+import type { AppState, JikanApiResponse } from './types/types';
 import Spinner from './components/layout/Spinner';
 import { API_SEARCH, API_TOP_AIRING } from './types/constants';
+import checkResponse from './services/checkResponse';
 
 class App extends React.Component<object, AppState> {
   state: AppState = {
@@ -33,12 +34,7 @@ class App extends React.Component<object, AppState> {
     this.setState({ isLoading: true, error: null });
 
     fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Request error: ${response.status}`);
-        }
-        return response.json();
-      })
+      .then(checkResponse<JikanApiResponse>)
       .then((data) => this.setState({ items: data.data }))
       .catch((error: Error) => {
         console.error(error);
@@ -60,7 +56,7 @@ class App extends React.Component<object, AppState> {
         {isLoading ? (
           <Spinner />
         ) : error ? (
-          <p>Request Error: {this.state.error}</p>
+          <p>{error}</p>
         ) : isEmpty ? (
           <p className="text-center text-[18px]">
             Nothing found matching &quot;{searchQuery}&quot;

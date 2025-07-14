@@ -47,3 +47,7 @@ export type CardItem = {
 export type ErrorButtonState = {
   shouldThrow: boolean;
 };
+
+export type JikanApiResponse = {
+  data: CardItem[];
+};
