@@ -6,7 +6,7 @@ import { BASE_PATH } from '@/types/constants';
 class Header extends React.Component {
   render(): React.JSX.Element {
     return (
-      <header className="text-black dark:text-white body-font w-full">
+      <header className="container text-black dark:text-white body-font w-full">
         <div className="mx-auto flex flex-wrap py-5 flex-col min-[20rem]:flex-row items-center justify-between">
           <a
             href={BASE_PATH}

@@ -28,11 +28,11 @@ class SearchBar extends React.Component<SearchBarProps> {
           defaultValue={this.props.searchQuery}
           onChange={this.handleChange}
           placeholder="Search for anime or manga..."
-          className="flex grow rounded-md border border-input bg-background px-3 py-2 text-base  md:text-sm pl-10 h-12 rounded-r-none"
+          className="flex grow rounded-md border border-input bg-background px-3 py-2 text-base md:text-lg pl-10 h-12 rounded-r-none"
         ></input>
         <button
           type="submit"
-          className="inline-flex items-center bg-gray-100 text-black border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 hover:cursor-pointer rounded-r text-base"
+          className="inline-flex items-center bg-neutral-900 text-white dark:bg-gray-100 dark:text-black border-0 py-1 px-3 focus:outline-none hover:bg-neutral-700 dark:hover:bg-gray-300 hover:cursor-pointer rounded-r text-base duration-300 font-semibold"
         >
           Search
         </button>

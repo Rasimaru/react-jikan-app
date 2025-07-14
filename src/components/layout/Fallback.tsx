@@ -4,12 +4,12 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 class Fallback extends React.Component {
   render() {
     return (
-      <section className="text-center grow flex flex-col justify-center items-center gap-4 h-full">
+      <section className="container text-center grow flex flex-col justify-center items-center gap-4 h-full">
         <DotLottieReact
           src="./Fox-fall.lottie"
           loop
           autoplay
-          className="sm:w-65 sm:h-65 w-50 h-50"
+          className="w-50 h-50"
         ></DotLottieReact>
         <h2 className="text-4xl">Oops! Sorry for the inconvenience!</h2>
         <p className="text-2xl">The Fox is already working on fixing it!</p>

@@ -26,7 +26,7 @@ class ErrorBoundary extends React.Component<BoundaryProps, BoundaryState> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="container px-5 flex flex-col items-center justify-start text-center mx-auto light:bg-gray-100 text-black dark:text-white min-h-full">
+        <div className="px-5 flex flex-col items-center justify-start text-center mx-auto bg-gray-200 dark:bg-neutral-900 text-black dark:text-white min-h-full w-full">
           <Header />
           {this.props.fallback}
           <Footer />
