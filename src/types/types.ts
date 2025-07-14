@@ -15,6 +15,21 @@ export type CardProps = {
   item: CardItem;
 };
 
+export type CardItem = {
+  title: string;
+  year: number;
+  images: {
+    webp: {
+      large_image_url: string;
+    };
+  };
+  mal_id: number;
+  score: number;
+  aired: {
+    from: string;
+  };
+};
+
 export type LayoutProps = {
   children: ReactNode;
 };
@@ -29,19 +44,13 @@ export type SearchBarProps = {
   searchQuery: string;
 };
 
-export type CardItem = {
-  title: string;
-  year: number;
-  images: {
-    webp: {
-      large_image_url: string;
-    };
-  };
-  mal_id: number;
-  score: number;
-  aired: {
-    from: string;
-  };
+export type BoundaryProps = {
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
+};
+
+export type BoundaryState = {
+  hasError: boolean;
 };
 
 export type ErrorButtonState = {

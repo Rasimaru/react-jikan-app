@@ -1,28 +1,22 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-
-export type BoundaryProps = {
-  children: React.ReactNode;
-  fallback?: React.ReactNode;
-};
-
-export type BoundaryState = {
-  hasError: boolean;
-};
+import type { BoundaryProps, BoundaryState } from '@/types/types';
 
 class ErrorBoundary extends React.Component<BoundaryProps, BoundaryState> {
-  state = {
+  state: BoundaryState = {
     hasError: false
   };
 
-  static getDerivedStateFromError() {
+  static getDerivedStateFromError(error: Error): BoundaryState {
+    void error;
     return { hasError: true };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     console.error('ErrorBoundary caught an error', error, errorInfo);
   }
+
   render() {
     if (this.state.hasError) {
       return (

@@ -12,8 +12,8 @@ async function checkResponse<T>(response: Response): Promise<T> {
     if (serverMessage) {
       throw new Error(serverMessage);
     }
-  } catch {
-    console.info('Response is not a valid Jikan error JSON; using fallback message.');
+  } catch (error: unknown) {
+    void error;
   }
 
   const fallbackMessage = getErrorMessage(response.status);

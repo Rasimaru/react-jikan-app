@@ -1,7 +1,7 @@
 import React from 'react';
 
 class Spinner extends React.Component {
-  render() {
+  render(): React.JSX.Element {
     return (
       <div className="flex justify-center items-start w-full h-[50vh]">
         <div
