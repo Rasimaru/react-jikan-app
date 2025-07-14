@@ -17,9 +17,12 @@ class App extends React.Component<object, AppState> {
 
   componentDidMount(): void {
     const query = localStorage.getItem('searchQuery') || '';
-    this.setState({ searchQuery: query }, () => {
-      this.fetchData(this.state.searchQuery);
-    });
+
+    if (query === this.state.searchQuery) {
+      this.fetchData(query);
+    } else {
+      this.setState({ searchQuery: query });
+    }
   }
 
   componentDidUpdate(_: object, prevState: AppState): void {
