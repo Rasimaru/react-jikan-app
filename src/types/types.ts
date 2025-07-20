@@ -17,7 +17,7 @@ export type CardProps = {
 
 export type CardItem = {
   title: string;
-  year: number;
+  year: number | null;
   images: {
     webp: {
       large_image_url: string;

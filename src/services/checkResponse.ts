@@ -5,15 +5,15 @@ async function checkResponse<T>(response: Response): Promise<T> {
     return response.json() as Promise<T>;
   }
 
-  try {
-    const errorData = await response.json();
-    const serverMessage = errorData.message || errorData.error;
+  const errorData: unknown = await response.json();
 
-    if (serverMessage) {
-      throw new Error(serverMessage);
-    }
-  } catch (error: unknown) {
-    void error;
+  const serverMessage =
+    typeof errorData === 'object' && errorData !== null && 'message' in errorData
+      ? (errorData as { message?: string }).message
+      : undefined;
+
+  if (serverMessage) {
+    throw new Error(serverMessage);
   }
 
   const fallbackMessage = getErrorMessage(response.status);
