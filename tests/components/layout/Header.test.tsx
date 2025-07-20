@@ -1,8 +1,6 @@
 import Header from '@/components/layout/Header';
 import { render, screen } from '@testing-library/react';
 
-jest.mock('@/assets/logo-fox.svg', () => 'mock-logo.svg');
-
 describe('Header component', () => {
   test('renders logo and title', () => {
     render(<Header />);

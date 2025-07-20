@@ -3,8 +3,6 @@ import ErrorButton from '@/components/layout/ErrorButton';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 
-jest.mock('@/assets/logo-fox.svg', () => 'mock-logo.svg');
-
 describe('ErrorBoundary component', () => {
   beforeEach(() => {
     jest.spyOn(console, 'error').mockImplementation(() => {});

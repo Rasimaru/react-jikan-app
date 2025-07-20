@@ -1,17 +1,7 @@
 import App from '@/App';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-jest.mock('@/assets/logo-fox.svg', () => 'mock-logo.svg');
-
-const mockData = [
-  {
-    mal_id: 1,
-    title: 'Test Anime',
-    score: 7.5,
-    images: { webp: { large_image_url: '' } }
-  }
-];
+import { mockItem } from './mocks/data/items';
 
 describe('App component', () => {
   beforeEach(() => {
@@ -45,7 +35,7 @@ describe('App component', () => {
     const fetchDataSpy = jest
       .spyOn(global, 'fetch')
       .mockResolvedValueOnce(new Response(JSON.stringify({ data: [] }), { status: 200 }))
-      .mockResolvedValueOnce(new Response(JSON.stringify({ data: mockData }), { status: 200 }));
+      .mockResolvedValueOnce(new Response(JSON.stringify({ data: [mockItem] }), { status: 200 }));
 
     const user = userEvent.setup();
     render(<App />);

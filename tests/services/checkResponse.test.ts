@@ -1,20 +1,11 @@
 import checkResponse from '@/services/checkResponse';
+import { mockEmptyData, mockErrorData, mockSuccessData } from '../mocks/data/responses';
+import { createMockResponse } from '@/utils/utils';
 
 jest.mock('@/services/getErrorMessage', () => ({
   __esModule: true,
   default: jest.fn((status) => `Error ${status}`)
 }));
-
-const mockSuccessData = { data: 'test' };
-const mockErrorData = { message: 'Something went wrong' };
-const mockEmptyData = {};
-
-const createMockResponse = (data: Record<string, unknown>, status: number): Response => {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { 'Content-Type': 'application/json' }
-  });
-};
 
 describe('checkResponse function', () => {
   it('returns parsed JSON when response is ok', async () => {
