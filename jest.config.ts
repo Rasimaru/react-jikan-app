@@ -17,7 +17,7 @@ const config: Config = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   collectCoverage: true,
-  coverageReporters: ['html', 'lcov'],
+  coverageReporters: ['text', 'html', 'lcov'],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!src/**/*.d.ts',
