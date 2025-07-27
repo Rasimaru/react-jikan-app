@@ -1,75 +1,100 @@
-import React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import Hero from './components/hero/Hero';
 import CardList from './components/catalog/CardList';
-import type { AppState, JikanApiResponse } from './types/types';
+import type { CardItem, JikanApiResponse } from './types/types';
 import Spinner from './components/layout/Spinner';
 import { API_SEARCH, API_TOP_AIRING } from './types/constants';
 import checkResponse from './services/checkResponse';
+import useLocalStorage from './hooks/useLocalStorage';
+import Pagination from './components/catalog/Pagination';
+import usePagination from './hooks/usePagination';
+import { Outlet, useSearchParams } from 'react-router-dom';
+import CardDetails from './components/catalog/CardDetails';
 
-class App extends React.Component<object, AppState> {
-  state: AppState = {
-    items: [],
-    searchQuery: '',
-    isLoading: false,
-    error: null
-  };
+const App = () => {
+  const [items, setItems] = useState<CardItem[]>([]);
+  const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  componentDidMount(): void {
-    const query = localStorage.getItem('searchQuery') || '';
+  const { page, totalPages, setTotalPages, goToPage } = usePagination();
 
-    if (query === this.state.searchQuery) {
-      this.fetchData(query);
-    } else {
-      this.setState({ searchQuery: query });
-    }
-  }
+  const [searchParams, setSearchParams] = useSearchParams();
+  const detailsId = searchParams.get('details');
 
-  componentDidUpdate(_: object, prevState: AppState): void {
-    if (prevState.searchQuery !== this.state.searchQuery) {
-      this.fetchData(this.state.searchQuery);
-    }
-  }
+  useEffect(() => {
+    const url =
+      searchQuery !== ''
+        ? `${API_SEARCH}?q=${encodeURIComponent(searchQuery)}&page=${page}`
+        : `${API_TOP_AIRING}&page=${page}`;
 
-  fetchData(query: string): void {
-    const url = query !== '' ? `${API_SEARCH}?q=${encodeURIComponent(query)}` : API_TOP_AIRING;
-
-    this.setState({ isLoading: true, error: null });
+    setIsLoading(true);
+    setError(null);
 
     fetch(url)
       .then(checkResponse<JikanApiResponse>)
-      .then((data) => this.setState({ items: data.data }))
+      .then((res) => {
+        setTotalPages(res.pagination.last_visible_page);
+        setItems(res.data);
+      })
       .catch((error: Error) => {
         console.error(error);
-        this.setState({ error: error.message });
+        setError(error.message);
       })
-      .finally(() => this.setState({ isLoading: false }));
-  }
+      .finally(() => setIsLoading(false));
+  }, [searchQuery, page, setItems, setTotalPages]);
 
-  handleSearch = (query: string): void => {
-    this.setState({ searchQuery: query });
+  const handleSearch = (query: string): void => {
+    setSearchQuery(query);
+    goToPage(1);
   };
 
-  render(): React.JSX.Element {
-    const { isLoading, error, items, searchQuery } = this.state;
-    const isEmpty = items.length === 0;
-    return (
-      <Layout>
-        <Hero onSearch={this.handleSearch} searchQuery={this.state.searchQuery}></Hero>
-        {isLoading ? (
-          <Spinner />
-        ) : error ? (
-          <p>{error}</p>
-        ) : isEmpty ? (
-          <p className="text-center text-[18px]">
-            Nothing found matching &quot;{searchQuery}&quot;
-          </p>
-        ) : (
-          <CardList items={items} />
-        )}
-      </Layout>
-    );
-  }
-}
+  const handleCardClick = useCallback(
+    (id: number) => {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set('details', id.toString());
+        return newParams;
+      });
+    },
+    [setSearchParams]
+  );
+
+  const handleCloseDetails = () => {
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.delete('details');
+      return newParams;
+    });
+  };
+
+  const isEmpty = items.length === 0;
+
+  return (
+    <Layout>
+      <Hero onSearch={handleSearch} searchQuery={searchQuery}></Hero>
+      {isLoading ? (
+        <Spinner />
+      ) : error ? (
+        <p>{`${error}`}</p>
+      ) : isEmpty ? (
+        <p className="text-center text-[18px]">Nothing found matching &quot;{searchQuery}&quot;</p>
+      ) : (
+        <div className="flex gap-6 w-full">
+          <div className="flex flex-col gap-10">
+            <CardList items={items} onCardClick={handleCardClick} />
+            <Pagination page={page} totalPages={totalPages} onPageChange={goToPage} />
+          </div>
+
+          <div>
+            <Outlet />
+            {detailsId && <CardDetails id={Number(detailsId)} onClose={handleCloseDetails} />}
+          </div>
+        </div>
+      )}
+    </Layout>
+  );
+};
 
 export default App;

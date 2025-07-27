@@ -1,7 +1,6 @@
 import ErrorBoundary from '@/components/layout/ErrorBoundary';
-import ErrorButton from '@/components/layout/ErrorButton';
-import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('ErrorBoundary component', () => {
   beforeEach(() => {
@@ -13,14 +12,16 @@ describe('ErrorBoundary component', () => {
   });
 
   it('renders Fallback if there is error', async () => {
+    const ThrowError = () => {
+      throw new Error('Test error');
+    };
     render(
-      <ErrorBoundary fallback={<div>Fallback text</div>}>
-        <ErrorButton />
-      </ErrorBoundary>
+      <MemoryRouter>
+        <ErrorBoundary fallback={<div>Fallback text</div>}>
+          <ThrowError />
+        </ErrorBoundary>
+      </MemoryRouter>
     );
-
-    expect(screen.getByText(/Throw Error/i)).toBeInTheDocument();
-    await userEvent.click(screen.getByText(/Throw Error/i));
 
     expect(screen.getByText(/Fallback text/i)).toBeInTheDocument();
   });

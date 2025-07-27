@@ -1,29 +1,24 @@
-import type { ErrorButtonState } from '@/types/types';
-import React from 'react';
+import React, { useState } from 'react';
 
-class ErrorButton extends React.Component<object, ErrorButtonState> {
-  state: ErrorButtonState = {
-    shouldThrow: false
+const ErrorButton = (): React.JSX.Element => {
+  const [shouldThrow, setShouldThrow] = useState(false);
+
+  const handleClick = (): void => {
+    setShouldThrow(true);
   };
 
-  handleClick = (): void => {
-    this.setState({ shouldThrow: true });
-  };
-
-  render(): React.JSX.Element {
-    if (this.state.shouldThrow) {
-      throw new Error('ErrorBoundary check');
-    }
-
-    return (
-      <button
-        onClick={this.handleClick}
-        className="inline-flex items-center animate-pulse bg-amber-300 text-black border-0 py-1.5 px-3 focus:outline-none hover:bg-gray-200 hover:cursor-pointer rounded text-base font-semibold duration-300"
-      >
-        Throw Error
-      </button>
-    );
+  if (shouldThrow) {
+    throw new Error('ErrorBoundary check');
   }
-}
+  return (
+    <button
+      aria-label="Trigger test error"
+      onClick={handleClick}
+      className="inline-flex items-center animate-pulse bg-amber-300 text-black border-0 py-1.5 px-3 focus:outline-none hover:bg-gray-200 hover:cursor-pointer rounded text-base font-semibold duration-300"
+    >
+      Throw Error
+    </button>
+  );
+};
 
 export default ErrorButton;

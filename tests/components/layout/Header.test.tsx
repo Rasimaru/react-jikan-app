@@ -1,17 +1,26 @@
 import Header from '@/components/layout/Header';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Header component', () => {
   test('renders logo and title', () => {
-    render(<Header />);
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>
+    );
 
     expect(screen.getByAltText(/mock-logo.svg/i)).toBeInTheDocument();
     expect(screen.getByText(/Jikan/i)).toBeInTheDocument();
   });
 
-  test('renders ErrorButton', () => {
-    render(<Header />);
+  test('renders navigation link to About page', () => {
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>
+    );
 
-    expect(screen.getByText(/Throw Error/i)).toBeInTheDocument();
+    expect(screen.getByText(/About/i)).toBeInTheDocument();
   });
 });

@@ -9,10 +9,12 @@ export type AppState = {
 
 export type CardListProps = {
   items: CardItem[];
+  onCardClick: (id: number) => void;
 };
 
 export type CardProps = {
   item: CardItem;
+  onClick: (id: number) => void;
 };
 
 export type CardItem = {
@@ -28,6 +30,9 @@ export type CardItem = {
   aired: {
     from: string;
   };
+  synopsis?: string;
+  source?: string;
+  duration?: string;
 };
 
 export type LayoutProps = {
@@ -59,4 +64,20 @@ export type ErrorButtonState = {
 
 export type JikanApiResponse = {
   data: CardItem[];
+  pagination: {
+    last_visible_page: number;
+    current_page: number;
+    has_next_page: boolean;
+  };
+};
+
+export type PaginationProps = {
+  page: number;
+  totalPages: number;
+  onPageChange: (pageNum: number) => void;
+};
+
+export type DetailsProps = {
+  id: number;
+  onClose: () => void;
 };
