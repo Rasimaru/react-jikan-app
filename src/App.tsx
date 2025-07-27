@@ -6,10 +6,11 @@ import type { CardItem, JikanApiResponse } from './types/types';
 import Spinner from './components/layout/Spinner';
 import { API_SEARCH, API_TOP_AIRING } from './types/constants';
 import checkResponse from './services/checkResponse';
+import useLocalStorage from './hooks/useLocalStorage';
 
 const App = () => {
   const [items, setItems] = useState<CardItem[]>([]);
-  const [searchQuery, setSearchQuery] = useState(() => localStorage.getItem('searchQuery') || '');
+  const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

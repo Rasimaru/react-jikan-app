@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { SearchBarProps } from '@/types/types';
 import { Search } from 'lucide-react';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 const SearchBar = (props: SearchBarProps) => {
   const { onSearch, searchQuery } = props;
-  const [query, setQuery] = useState(searchQuery);
+  const [query, setQuery] = useLocalStorage('searchQuery', searchQuery);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setQuery(e.target.value);
@@ -13,7 +14,7 @@ const SearchBar = (props: SearchBarProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const trimmedQuery = query.trim();
-    localStorage.setItem('searchQuery', trimmedQuery);
+    setQuery(trimmedQuery);
     onSearch(trimmedQuery);
   };
 

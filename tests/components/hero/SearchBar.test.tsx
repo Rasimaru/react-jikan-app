@@ -4,7 +4,12 @@ import userEvent from '@testing-library/user-event';
 
 describe('SearchBar component', () => {
   beforeEach(() => {
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
     localStorage.clear();
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   const onSearchMock = jest.fn();
@@ -28,5 +33,31 @@ describe('SearchBar component', () => {
     expect(onSearchMock).toHaveBeenCalledWith('Witch');
     expect(onSearchMock).toHaveBeenCalledTimes(1);
     expect(localStorage.getItem('searchQuery')).toBe('Witch');
+  });
+
+  it('calls console.warn if localStorage.getItem throws', () => {
+    jest.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('getItem error');
+    });
+
+    render(<SearchBar onSearch={onSearchMock} searchQuery="init" />);
+
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining("Can't get value from Local Storage for"),
+      expect.any(Error)
+    );
+  });
+
+  it('logs warning when localStorage.setItem throws', () => {
+    jest.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('setItem error');
+    });
+
+    render(<SearchBar onSearch={onSearchMock} searchQuery="init" />);
+
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining("Can't set value to Local Storage for"),
+      expect.any(Error)
+    );
   });
 });
