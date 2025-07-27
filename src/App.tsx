@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import Hero from './components/hero/Hero';
 import CardList from './components/catalog/CardList';
@@ -9,7 +9,8 @@ import checkResponse from './services/checkResponse';
 import useLocalStorage from './hooks/useLocalStorage';
 import Pagination from './components/catalog/Pagination';
 import usePagination from './hooks/usePagination';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
+import CardDetails from './components/catalog/CardDetails';
 
 const App = () => {
   const [items, setItems] = useState<CardItem[]>([]);
@@ -18,6 +19,9 @@ const App = () => {
   const [error, setError] = useState<string | null>(null);
 
   const { page, totalPages, setTotalPages, goToPage } = usePagination();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const detailsId = searchParams.get('details');
 
   useEffect(() => {
     const url =
@@ -46,6 +50,25 @@ const App = () => {
     goToPage(1);
   };
 
+  const handleCardClick = useCallback(
+    (id: number) => {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set('details', id.toString());
+        return newParams;
+      });
+    },
+    [setSearchParams]
+  );
+
+  const handleCloseDetails = () => {
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.delete('details');
+      return newParams;
+    });
+  };
+
   const isEmpty = items.length === 0;
 
   return (
@@ -60,14 +83,13 @@ const App = () => {
       ) : (
         <div className="flex gap-6 w-full">
           <div className="flex flex-col gap-10">
-            <CardList items={items} />
+            <CardList items={items} onCardClick={handleCardClick} />
             <Pagination page={page} totalPages={totalPages} onPageChange={goToPage} />
           </div>
 
-          <div
-          // className="w-1/2"
-          >
+          <div>
             <Outlet />
+            {detailsId && <CardDetails id={Number(detailsId)} onClose={handleCloseDetails} />}
           </div>
         </div>
       )}

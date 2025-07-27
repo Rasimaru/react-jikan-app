@@ -3,10 +3,14 @@ import type { CardProps } from '@/types/types';
 import { StarIcon } from 'lucide-react';
 
 const Card = (props: CardProps): React.JSX.Element => {
-  const { title, year, images, score } = props.item;
+  const { title, year, images, score, mal_id } = props.item;
 
   return (
-    <a aria-label={`Card about ${title}`} href="#" className="hover:scale-102 duration-300">
+    <div
+      aria-label={`Card about ${title}`}
+      className="hover:scale-102 hover:cursor-pointer duration-300"
+      onClick={() => props.onClick(mal_id)}
+    >
       <div className="flex flex-col border-1 rounded-xl overflow-clip relative h-full">
         <div className="aspect-[3/4] relative">
           <img
@@ -25,8 +29,8 @@ const Card = (props: CardProps): React.JSX.Element => {
           <span>{score}</span>
         </div>
       </div>
-    </a>
+    </div>
   );
 };
 
-export default Card;
+export default React.memo(Card);

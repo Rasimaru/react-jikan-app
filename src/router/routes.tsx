@@ -7,17 +7,7 @@ import type { RouteObject } from 'react-router-dom';
 export const routes: RouteObject[] = [
   {
     path: ROUTES.Home,
-    element: <App />,
-    children: [
-      {
-        path: '',
-        element: null
-      },
-      {
-        path: ''
-        // element: <ItemDetails />,
-      }
-    ]
+    element: <App />
   },
   {
     path: ROUTES.About,

@@ -1,15 +1,17 @@
 import type { CardItem } from '@/types/types';
 
 export const mockItem = {
-  mal_id: 1,
-  title: 'Test Anime',
+  title: 'Test Title',
+  duration: '24 min',
+  source: 'Manga',
+  year: 2025,
+  synopsis: 'Test synopsis',
   score: 1.25,
   images: {
     webp: {
-      large_image_url: 'url'
+      large_image_url: 'https://test.com/image.webp'
     }
-  },
-  year: 2025
+  }
 } as CardItem;
 
 export const mockItems = [

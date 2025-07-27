@@ -4,7 +4,7 @@ import { mockItem } from '../../mocks/data/items';
 
 describe('Card component', () => {
   it('renders title, year, image alt and score from props', () => {
-    render(<Card item={mockItem}></Card>);
+    render(<Card item={mockItem} onClick={jest.fn()}></Card>);
 
     expect(screen.getByAltText(/test/i)).toBeInTheDocument();
     expect(screen.getByText(/test/i)).toBeInTheDocument();
@@ -13,7 +13,7 @@ describe('Card component', () => {
   });
 
   it('renders "TBD" if year is null', () => {
-    render(<Card item={{ ...mockItem, year: null }}></Card>);
+    render(<Card item={{ ...mockItem, year: null }} onClick={jest.fn()}></Card>);
 
     expect(screen.getByText(/TBD/i)).toBeInTheDocument();
   });
