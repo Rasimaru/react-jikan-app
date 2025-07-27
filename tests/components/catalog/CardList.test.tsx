@@ -10,7 +10,7 @@ jest.mock('@/components/catalog/Card', () => ({
 
 describe('CardList component', () => {
   it('renders cards from props', () => {
-    render(<CardList items={mockItems}></CardList>);
+    render(<CardList items={mockItems} onCardClick={jest.fn()}></CardList>);
 
     expect(screen.getByText(/Card 1/i)).toBeInTheDocument();
     expect(screen.getByText(/Card 2/i)).toBeInTheDocument();
