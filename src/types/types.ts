@@ -59,4 +59,15 @@ export type ErrorButtonState = {
 
 export type JikanApiResponse = {
   data: CardItem[];
+  pagination: {
+    last_visible_page: number;
+    current_page: number;
+    has_next_page: boolean;
+  };
+};
+
+export type PaginationProps = {
+  page: number;
+  totalPages: number;
+  onPageChange: (pageNum: number) => void;
 };
