@@ -1,5 +1,5 @@
 import Fallback from '@/components/layout/Fallback';
-import { BASE_PATH } from '@/types/constants';
+import { ROUTES } from '@/types/constants';
 import { render, screen } from '@testing-library/react';
 
 describe('Fallback component', () => {
@@ -16,6 +16,6 @@ describe('Fallback component', () => {
 
     const reloadButton = screen.getByRole('button');
     expect(reloadButton).toBeInTheDocument();
-    expect(reloadButton).toHaveAttribute('href', BASE_PATH);
+    expect(reloadButton).toHaveAttribute('href', ROUTES.Home);
   });
 });

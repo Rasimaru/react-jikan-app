@@ -9,6 +9,7 @@ import checkResponse from './services/checkResponse';
 import useLocalStorage from './hooks/useLocalStorage';
 import Pagination from './components/catalog/Pagination';
 import usePagination from './hooks/usePagination';
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
   const [items, setItems] = useState<CardItem[]>([]);
@@ -19,14 +20,11 @@ const App = () => {
   const { page, totalPages, setTotalPages, goToPage } = usePagination();
 
   useEffect(() => {
-    fetchData(searchQuery);
-  }, [searchQuery, page]);
-
-  function fetchData(query: string): void {
     const url =
-      query !== ''
-        ? `${API_SEARCH}?q=${encodeURIComponent(query)}&page=${page}`
+      searchQuery !== ''
+        ? `${API_SEARCH}?q=${encodeURIComponent(searchQuery)}&page=${page}`
         : `${API_TOP_AIRING}&page=${page}`;
+
     setIsLoading(true);
     setError(null);
 
@@ -41,7 +39,7 @@ const App = () => {
         setError(error.message);
       })
       .finally(() => setIsLoading(false));
-  }
+  }, [searchQuery, page, setItems, setTotalPages]);
 
   const handleSearch = (query: string): void => {
     setSearchQuery(query);
@@ -60,10 +58,18 @@ const App = () => {
       ) : isEmpty ? (
         <p className="text-center text-[18px]">Nothing found matching &quot;{searchQuery}&quot;</p>
       ) : (
-        <>
-          <CardList items={items} />
-          <Pagination page={page} totalPages={totalPages} onPageChange={goToPage} />
-        </>
+        <div className="flex gap-6 w-full">
+          <div className="flex flex-col gap-10">
+            <CardList items={items} />
+            <Pagination page={page} totalPages={totalPages} onPageChange={goToPage} />
+          </div>
+
+          <div
+          // className="w-1/2"
+          >
+            <Outlet />
+          </div>
+        </div>
       )}
     </Layout>
   );
