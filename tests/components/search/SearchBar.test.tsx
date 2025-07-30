@@ -20,7 +20,7 @@ describe('SearchBar component', () => {
     const userAction = userEvent.setup();
     render(<SearchBar onSearch={onSearchMock} searchQuery=""></SearchBar>);
 
-    const input = screen.getByPlaceholderText(/search for anime or manga/i);
+    const input = screen.getByRole('searchbox');
     await userAction.clear(input);
     await userAction.type(input, '  Witch  ');
     await userAction.click(screen.getByRole('button'));

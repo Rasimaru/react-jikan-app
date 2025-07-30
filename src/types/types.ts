@@ -34,12 +34,7 @@ export type LayoutProps = {
   children: ReactNode;
 };
 
-export type HeroProps = {
-  onSearch: (query: string) => void;
-  searchQuery: string;
-};
-
-export type SearchBarProps = {
+export type SearchProps = {
   onSearch: (query: string) => void;
   searchQuery: string;
 };

@@ -1,44 +1,52 @@
-import React from 'react';
-import type { SearchBarProps } from '@/types/types';
+import React, { useEffect, useState, type JSX } from 'react';
+import type { SearchProps } from '@/types/types';
 import { Search } from 'lucide-react';
 
-class SearchBar extends React.Component<SearchBarProps> {
-  private tempQuery = this.props.searchQuery;
+const SearchBar = (props: SearchProps): JSX.Element => {
+  const { searchQuery, onSearch } = props;
+  const [query, setQuery] = useState(searchQuery);
 
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    this.tempQuery = e.target.value;
+  useEffect(() => {
+    setQuery(searchQuery);
+  }, [searchQuery]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setQuery(e.target.value);
   };
 
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const query = this.tempQuery.trim();
-    localStorage.setItem('searchQuery', query);
-    this.props.onSearch(query);
+    const trimmedQuery = query.trim();
+
+    setQuery(trimmedQuery);
+    localStorage.setItem('searchQuery', trimmedQuery);
+    onSearch(trimmedQuery);
   };
 
-  render(): React.JSX.Element {
-    return (
-      <form
-        onSubmit={this.handleSubmit}
-        className="flex sm:w-[500px] transition-all duration-700 delay-500 translate-y-0 opacity-100 relative"
-      >
-        <Search className="absolute top-1/4 left-2"></Search>
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="flex sm:w-[500px] w-full transition-all duration-700 delay-500 translate-y-0 opacity-100"
+    >
+      <label className="relative flex grow">
+        <Search aria-hidden="true" focusable="false" className="absolute top-1/4 left-2"></Search>
         <input
           type="search"
-          defaultValue={this.props.searchQuery}
-          onChange={this.handleChange}
+          aria-label="Search input"
+          value={query}
+          onChange={handleChange}
           placeholder="Search for anime or manga..."
-          className="flex grow rounded-md border border-input bg-background px-3 py-2 text-base md:text-lg pl-10 h-12 rounded-r-none"
+          className="grow rounded-md border bg-background px-3 py-2 text-base md:text-lg pl-10 h-12 rounded-r-none"
         ></input>
-        <button
-          type="submit"
-          className="inline-flex items-center bg-neutral-900 text-white dark:bg-gray-100 dark:text-black border-0 py-1 px-3 focus:outline-none hover:bg-neutral-700 dark:hover:bg-gray-300 hover:cursor-pointer rounded-r text-base duration-300 font-semibold"
-        >
-          Search
-        </button>
-      </form>
-    );
-  }
-}
+      </label>
+      <button
+        type="submit"
+        className="inline-flex  items-center bg-amber-500 text-black py-1 px-3 hover:bg-amber-300 dark:hover:bg-gray-100 hover:cursor-pointer rounded-r text-base duration-300 font-semibold"
+      >
+        Search
+      </button>
+    </form>
+  );
+};
 
 export default SearchBar;
