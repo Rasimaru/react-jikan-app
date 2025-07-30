@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import type { BoundaryProps, BoundaryState } from '@/types/types';
+import Fallback from './Fallback';
 
 class ErrorBoundary extends React.Component<BoundaryProps, BoundaryState> {
   state: BoundaryState = {
@@ -16,9 +17,17 @@ class ErrorBoundary extends React.Component<BoundaryProps, BoundaryState> {
     console.error('ErrorBoundary caught an error', error, errorInfo);
   }
 
+  resetError = () => {
+    this.setState({ hasError: false });
+  };
+
   render() {
     if (this.state.hasError) {
-      return <Layout>{this.props.fallback}</Layout>;
+      return (
+        <Layout>
+          <Fallback onReset={this.resetError}></Fallback>
+        </Layout>
+      );
     }
 
     return this.props.children;

@@ -14,14 +14,31 @@ describe('ErrorBoundary component', () => {
 
   it('renders Fallback if there is error', async () => {
     render(
-      <ErrorBoundary fallback={<div>Fallback text</div>}>
+      <ErrorBoundary>
         <ErrorButton />
+        <div>Smth here</div>
       </ErrorBoundary>
     );
 
     expect(screen.getByText(/Throw Error/i)).toBeInTheDocument();
     await userEvent.click(screen.getByText(/Throw Error/i));
 
-    expect(screen.getByText(/Fallback text/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Smth here/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Sorry/i)).toBeInTheDocument();
+  });
+
+  it('resets error and reloads changes screen after button click', async () => {
+    render(
+      <ErrorBoundary>
+        <ErrorButton />
+        <div>Smth here</div>
+      </ErrorBoundary>
+    );
+
+    await userEvent.click(screen.getByText(/Throw Error/i));
+    await userEvent.click(screen.getByTestId('Error reset'));
+
+    expect(screen.queryByText(/Sorry/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Smth here/i)).toBeInTheDocument();
   });
 });

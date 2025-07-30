@@ -48,8 +48,8 @@ export type BoundaryState = {
   hasError: boolean;
 };
 
-export type ErrorButtonState = {
-  shouldThrow: boolean;
+export type FallbackProps = {
+  onReset: () => void;
 };
 
 export type JikanApiResponse = {

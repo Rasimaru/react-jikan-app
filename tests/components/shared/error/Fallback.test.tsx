@@ -1,10 +1,9 @@
 import Fallback from '@/components/shared/error/Fallback';
-import { BASE_PATH } from '@/types/constants';
 import { render, screen } from '@testing-library/react';
 
 describe('Fallback component', () => {
   it('renders image, title and text', () => {
-    render(<Fallback></Fallback>);
+    render(<Fallback onReset={jest.fn}></Fallback>);
 
     expect(screen.getByTestId('mock-lottie')).toBeInTheDocument();
     expect(screen.getByText(/Sorry/i)).toBeInTheDocument();
@@ -12,10 +11,9 @@ describe('Fallback component', () => {
   });
 
   it('renders reload button with correct href', () => {
-    render(<Fallback />);
+    render(<Fallback onReset={jest.fn} />);
 
     const reloadButton = screen.getByRole('button');
     expect(reloadButton).toBeInTheDocument();
-    expect(reloadButton).toHaveAttribute('href', BASE_PATH);
   });
 });
