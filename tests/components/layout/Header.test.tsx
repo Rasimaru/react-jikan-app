@@ -5,7 +5,7 @@ describe('Header component', () => {
   test('renders logo and title', () => {
     render(<Header />);
 
-    expect(screen.getByAltText(/mock-logo.svg/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/Jikan logo/i)).toBeInTheDocument();
     expect(screen.getByText(/Jikan/i)).toBeInTheDocument();
   });
 
