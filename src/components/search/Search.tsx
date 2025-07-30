@@ -7,10 +7,13 @@ const Search = (props: SearchProps): JSX.Element => {
   return (
     <section
       aria-labelledby="search-heading"
-      className="hero flex items-center justify-center flex-col gap-6 w-full"
+      aria-describedby="search-description"
+      className="hero flex items-center justify-center flex-col gap-6 w-full sm:pt-10 pt-5"
     >
-      <h2 className="sm:text-5xl text-4xl">Discover Your Next Adventure</h2>
-      <p className="sm:text-lg text-base text-center">
+      <h2 id="search-heading" className="sm:text-5xl text-4xl">
+        Discover Your Next Adventure
+      </h2>
+      <p id="search-description" className="sm:text-lg text-base text-center">
         Track, discover, and discuss your favorite anime and manga all in one place.
       </p>
       <SearchBar onSearch={onSearch} searchQuery={searchQuery}></SearchBar>
