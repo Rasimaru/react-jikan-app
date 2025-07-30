@@ -1,8 +1,8 @@
-import checkResponse from '@/services/checkResponse';
-import { mockEmptyData, mockErrorData, mockSuccessData } from '../mocks/data/responses';
-import { createMockResponse } from '@/utils/utils';
+import checkResponse from '@/utils/http/checkResponse';
+import { mockEmptyData, mockErrorData, mockSuccessData } from '../../mocks/data/responses';
+import { createMockResponse } from '../../mocks/utils';
 
-jest.mock('@/services/getErrorMessage', () => ({
+jest.mock('@/utils/http/getErrorMessage', () => ({
   __esModule: true,
   default: jest.fn((status) => `Error ${status}`)
 }));

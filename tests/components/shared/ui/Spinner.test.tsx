@@ -1,4 +1,4 @@
-import Spinner from '@/components/layout/Spinner';
+import Spinner from '@/components/shared/ui/Spinner';
 import { render, screen } from '@testing-library/react';
 
 describe('Spinner component', () => {

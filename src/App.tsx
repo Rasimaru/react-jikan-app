@@ -1,11 +1,13 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
-import Hero from './components/hero/Hero';
+
 import CardList from './components/catalog/CardList';
 import type { AppState, JikanApiResponse } from './types/types';
-import Spinner from './components/layout/Spinner';
+
 import { API_SEARCH, API_TOP_AIRING } from './types/constants';
-import checkResponse from './services/checkResponse';
+import checkResponse from './utils/http/checkResponse';
+import Spinner from './components/shared/ui/Spinner';
+import Search from './components/search/Search';
 
 class App extends React.Component<object, AppState> {
   state: AppState = {
@@ -55,7 +57,7 @@ class App extends React.Component<object, AppState> {
     const isEmpty = items.length === 0;
     return (
       <Layout>
-        <Hero onSearch={this.handleSearch} searchQuery={this.state.searchQuery}></Hero>
+        <Search onSearch={this.handleSearch} searchQuery={this.state.searchQuery} />
         {isLoading ? (
           <Spinner />
         ) : error ? (

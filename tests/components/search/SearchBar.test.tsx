@@ -1,4 +1,4 @@
-import SearchBar from '@/components/hero/SearchBar';
+import SearchBar from '@/components/search/SearchBar';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 

@@ -1,7 +1,7 @@
-import ErrorBoundary from '@/components/layout/ErrorBoundary';
-import ErrorButton from '@/components/layout/ErrorButton';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
+import ErrorBoundary from '@/components/shared/error/ErrorBoundary';
+import ErrorButton from '@/components/shared/error/ErrorButton';
 
 describe('ErrorBoundary component', () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import getErrorMessage from '@/services/getErrorMessage';
+import getErrorMessage from '@/utils/http/getErrorMessage';
 
 describe('getErrorMessage function', () => {
   it.each([

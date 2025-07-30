@@ -1,4 +1,4 @@
-import ErrorButton from '@/components/layout/ErrorButton';
+import ErrorButton from '@/components/shared/error/ErrorButton';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('ErrorButton component', () => {

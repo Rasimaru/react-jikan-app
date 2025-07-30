@@ -2,7 +2,7 @@ import React from 'react';
 import SearchBar from './SearchBar';
 import type { HeroProps } from '@/types/types';
 
-class Hero extends React.Component<HeroProps> {
+class Search extends React.Component<HeroProps> {
   render(): React.JSX.Element {
     return (
       <section className="hero flex items-center justify-center flex-col gap-6  w-full">
@@ -16,4 +16,4 @@ class Hero extends React.Component<HeroProps> {
   }
 }
 
-export default Hero;
+export default Search;

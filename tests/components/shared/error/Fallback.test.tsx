@@ -1,4 +1,4 @@
-import Fallback from '@/components/layout/Fallback';
+import Fallback from '@/components/shared/error/Fallback';
 import { BASE_PATH } from '@/types/constants';
 import { render, screen } from '@testing-library/react';
 

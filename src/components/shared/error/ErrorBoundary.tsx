@@ -1,6 +1,5 @@
 import React from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import Layout from '@/components/layout/Layout';
 import type { BoundaryProps, BoundaryState } from '@/types/types';
 
 class ErrorBoundary extends React.Component<BoundaryProps, BoundaryState> {
@@ -19,13 +18,7 @@ class ErrorBoundary extends React.Component<BoundaryProps, BoundaryState> {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <div className="px-5 flex flex-col items-center justify-start text-center mx-auto bg-gray-200 dark:bg-neutral-900 text-black dark:text-white min-h-full w-full">
-          <Header />
-          {this.props.fallback}
-          <Footer />
-        </div>
-      );
+      return <Layout>{this.props.fallback}</Layout>;
     }
 
     return this.props.children;

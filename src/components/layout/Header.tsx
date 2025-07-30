@@ -1,7 +1,8 @@
 import logo from '@/assets/logo-fox.svg';
 import React from 'react';
-import ErrorButton from './ErrorButton';
+
 import { BASE_PATH } from '@/types/constants';
+import ErrorButton from '../shared/error/ErrorButton';
 
 class Header extends React.Component {
   render(): React.JSX.Element {
