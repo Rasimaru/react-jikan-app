@@ -1,5 +1,12 @@
 import type { ReactNode } from 'react';
 
+export type ResultsProps = {
+  items: CardItem[];
+  searchQuery: string;
+  isLoading: boolean;
+  error: string | null;
+};
+
 export type CardListProps = {
   items: CardItem[];
 };

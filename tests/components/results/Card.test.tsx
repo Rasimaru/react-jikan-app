@@ -1,4 +1,4 @@
-import Card from '@/components/catalog/Card';
+import Card from '@/components/results/Card';
 import { render, screen } from '@testing-library/react';
 import { mockItem } from '../../mocks/data/items';
 
