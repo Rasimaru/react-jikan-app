@@ -1,24 +1,26 @@
 import { type JSX } from 'react';
-import useFetchData from './hooks/useFetchData';
-import useLocalStorage from './hooks/useLocalStorage';
+import { BrowserRouter, Route, Routes } from 'react-router';
 
 import Layout from '@/components/layout/Layout';
-import Search from './components/search/Search';
-import SearchResults from './components/results/SearchResults';
+
+import MainPage from './pages/MainPage';
+import AboutPage from './pages/AboutPage';
+import NotFoundPage from './pages/NotFoundPage';
+import DetailsPage from './pages/DetailsPage';
+import { BASE_PATH } from './types/constants';
 
 const App = (): JSX.Element => {
-  const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
-  const { items, isLoading, error } = useFetchData(searchQuery);
-
-  const handleSearch = (query: string): void => {
-    setSearchQuery(query);
-  };
-
   return (
-    <Layout>
-      <Search onSearch={handleSearch} searchQuery={searchQuery} />
-      <SearchResults items={items} error={error} isLoading={isLoading} searchQuery={searchQuery} />
-    </Layout>
+    <BrowserRouter>
+      <Routes>
+        <Route path={BASE_PATH} element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="details/:id" element={<DetailsPage />}></Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 

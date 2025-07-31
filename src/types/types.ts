@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-
 export type ResultsProps = {
   items: CardItem[];
   searchQuery: string;
@@ -28,10 +26,6 @@ export type CardItem = {
   aired: {
     from: string;
   };
-};
-
-export type LayoutProps = {
-  children: ReactNode;
 };
 
 export type SearchProps = {
