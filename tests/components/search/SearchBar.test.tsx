@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 describe('SearchBar component', () => {
   beforeEach(() => {
     localStorage.clear();
+    jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   const onSearchMock = jest.fn();
@@ -28,5 +29,31 @@ describe('SearchBar component', () => {
     expect(onSearchMock).toHaveBeenCalledWith('Witch');
     expect(onSearchMock).toHaveBeenCalledTimes(1);
     expect(localStorage.getItem('searchQuery')).toBe('Witch');
+  });
+
+  it('handles error when reading from localStorage', async () => {
+    jest.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error(`Can't read value from local storage`);
+    });
+
+    render(<SearchBar onSearch={onSearchMock} searchQuery="initial"></SearchBar>);
+
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining("Can't read value from local storage"),
+      expect.any(Error)
+    );
+  });
+
+  it('handles error when setting to localStorage', async () => {
+    jest.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error(`Can't set value to local storage`);
+    });
+
+    render(<SearchBar onSearch={onSearchMock} searchQuery="initial"></SearchBar>);
+
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining("Can't set value to local storage"),
+      expect.any(Error)
+    );
   });
 });

@@ -4,7 +4,7 @@ const useLocalStorage = (key: string, initialValue: string) => {
   const getValue = (key: string): string => {
     try {
       const storedValue = localStorage.getItem(key);
-      return storedValue ? JSON.parse(storedValue) : initialValue;
+      return storedValue ? storedValue : initialValue;
     } catch (error) {
       console.error(`Can't read value from local storage ${key}`, error);
       return initialValue;
@@ -15,7 +15,7 @@ const useLocalStorage = (key: string, initialValue: string) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem(key, JSON.stringify(value));
+      localStorage.setItem(key, value);
     } catch (error) {
       console.error(`Can't set value to local storage ${key}`, error);
     }

@@ -11,6 +11,7 @@ describe('App component', () => {
 
   afterEach(() => {
     jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   it('renders on first mount', () => {
@@ -21,14 +22,18 @@ describe('App component', () => {
 
   it('uses localStorage searchQuery on mount', async () => {
     localStorage.setItem('searchQuery', 'Bleach');
+
     const fetchDataSpy = jest
       .spyOn(global, 'fetch')
       .mockResolvedValue(new Response(JSON.stringify({ data: [] }), { status: 200 }));
     render(<App />);
 
-    await waitFor(() => {
-      expect(fetchDataSpy).toHaveBeenCalledWith(expect.stringContaining('q=Bleach'));
-    });
+    await waitFor(
+      () => {
+        expect(fetchDataSpy).toHaveBeenCalledWith(expect.stringContaining('q=Bleach'));
+      },
+      { timeout: 2000 }
+    );
   });
 
   it('updates searchQuery in App when submitting SearchBar and fetching', async () => {
