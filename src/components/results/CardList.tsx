@@ -8,7 +8,7 @@ const CardList = (props: CardListProps): JSX.Element => {
   return (
     <section
       role="list"
-      className="grid gap-4 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:pb-10 pb-5"
+      className="grid gap-4 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 min-[450px]:grid-cols-2 sm:pb-10 pb-5"
     >
       {items.map((item, index) => (
         <Card key={`${item.mal_id}-${index}`} item={item} />

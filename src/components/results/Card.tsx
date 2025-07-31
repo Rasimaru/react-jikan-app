@@ -10,7 +10,7 @@ const Card = (props: CardProps): JSX.Element => {
       href="#"
       aria-label={`View details for ${title}`}
       role="listitem"
-      className="hover:scale-102 duration-300 rounded-xl"
+      className="hover:scale-102 duration-300 rounded-xl max-w-[300px]"
     >
       <div className="flex flex-col border-1 rounded-xl overflow-clip relative h-full">
         <div className="aspect-[3/4] relative">

@@ -30,7 +30,7 @@ const SearchBar = (props: SearchProps): JSX.Element => {
     <form
       autoComplete="none"
       onSubmit={handleSubmit}
-      className="flex sm:w-[500px] w-full transition-all duration-700 delay-500 translate-y-0 opacity-100"
+      className="flex sm:max-w-[500px] min-[340px]:w-full w-max transition-all duration-700 delay-500 translate-y-0 opacity-100 overflow-clip"
     >
       <label className="relative flex grow">
         <Search aria-hidden="true" focusable="false" className="absolute top-1/4 left-2"></Search>
@@ -41,12 +41,12 @@ const SearchBar = (props: SearchProps): JSX.Element => {
           value={localQuery}
           onChange={handleChange}
           placeholder="Search for anime or manga..."
-          className="grow rounded-md border bg-background px-3 py-2 text-base md:text-lg pl-10 h-12 rounded-r-none"
+          className="flex grow rounded-md border bg-background px-3 py-2 text-base md:text-lg pl-10 h-12 rounded-r-none max-[380px]:pr-0"
         ></input>
       </label>
       <button
         type="submit"
-        className="inline-flex  items-center bg-amber-500 text-black py-1 px-3 hover:bg-amber-300 dark:hover:bg-gray-100 hover:cursor-pointer rounded-r text-base duration-300 font-semibold"
+        className="inline-flex items-center bg-amber-500 text-black py-1 px-3 hover:bg-amber-300 dark:hover:bg-gray-100 hover:cursor-pointer rounded-r text-base duration-300 font-semibold"
       >
         Search
       </button>
