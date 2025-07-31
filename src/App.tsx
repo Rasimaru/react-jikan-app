@@ -1,33 +1,17 @@
-import { useEffect, useState, type JSX } from 'react';
+import { type JSX } from 'react';
+import useFetchData from './hooks/useFetchData';
+
 import Layout from '@/components/layout/Layout';
 import CardList from './components/catalog/CardList';
-import type { CardItem } from './types/types';
-
 import Spinner from './components/shared/ui/Spinner';
 import Search from './components/search/Search';
-import fetchData from './services/api';
+import useLocalStorage from './hooks/useLocalStorage';
 
 const App = (): JSX.Element => {
-  const [searchQuery, setSearchQuery] = useState(() => localStorage.getItem('searchQuery') || '');
-  const [items, setItems] = useState<CardItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-
-    fetchData(searchQuery)
-      .then((data) => setItems(data.data))
-      .catch((error: Error) => {
-        console.error(error);
-        setError(error.message);
-      })
-      .finally(() => setIsLoading(false));
-  }, [searchQuery]);
+  const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
+  const { items, isLoading, error } = useFetchData(searchQuery);
 
   const handleSearch = (query: string): void => {
-    setItems([]);
     setSearchQuery(query);
   };
 
