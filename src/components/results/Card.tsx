@@ -1,13 +1,14 @@
 import { type JSX } from 'react';
 import type { CardProps } from '@/types/types';
 import { StarIcon } from 'lucide-react';
+import { Link } from 'react-router';
 
 const Card = (props: CardProps): JSX.Element => {
-  const { title, year, images, score } = props.item;
+  const { mal_id, title, year, images, score } = props.item;
 
   return (
-    <a
-      href="#"
+    <Link
+      to={mal_id.toString()}
       aria-label={`View details for ${title}`}
       role="listitem"
       className="hover:scale-102 duration-300 rounded-xl max-w-[300px]"
@@ -34,7 +35,7 @@ const Card = (props: CardProps): JSX.Element => {
           <span>{score}</span>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 

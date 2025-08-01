@@ -5,6 +5,12 @@ export type ResultsProps = {
   error: string | null;
 };
 
+export type PaginationProps = {
+  page: number;
+  totalPages: number;
+  onPageChange: (newPage: number) => void;
+};
+
 export type CardListProps = {
   items: CardItem[];
 };
@@ -47,5 +53,14 @@ export type FallbackProps = {
 };
 
 export type JikanApiResponse = {
+  pagination: {
+    last_visible_page: number;
+    current_page: number;
+    has_next_page: boolean;
+  };
   data: CardItem[];
+};
+
+export type JikanApiResponseId = {
+  data: CardItem;
 };

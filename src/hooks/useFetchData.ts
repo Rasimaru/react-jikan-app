@@ -2,26 +2,30 @@ import fetchData from '@/services/api';
 import type { CardItem } from '@/types/types';
 import { useEffect, useState } from 'react';
 
-const useFetchData = (query: string) => {
+const useFetchData = (query: string, page: number) => {
   const [items, setItems] = useState<CardItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     setItems([]);
     setIsLoading(true);
     setError(null);
 
-    fetchData(query)
-      .then((data) => setItems(data.data))
+    fetchData(query, page)
+      .then((data) => {
+        setTotalPages(data.pagination.last_visible_page);
+        setItems(data.data);
+      })
       .catch((error: Error) => {
         console.error('Fetch error', error);
         setError(error.message);
       })
       .finally(() => setIsLoading(false));
-  }, [query]);
+  }, [query, page]);
 
-  return { items, isLoading, error };
+  return { items, isLoading, error, totalPages };
 };
 
 export default useFetchData;
