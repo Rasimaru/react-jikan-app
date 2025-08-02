@@ -1,10 +1,15 @@
 import Card from '@/components/results/Card';
 import { render, screen } from '@testing-library/react';
 import { mockItem } from '../../mocks/data/items';
+import { MemoryRouter } from 'react-router';
 
 describe('Card component', () => {
   it('renders title, year, image alt and score from props', () => {
-    render(<Card item={mockItem}></Card>);
+    render(
+      <MemoryRouter>
+        <Card item={mockItem}></Card>
+      </MemoryRouter>
+    );
 
     expect(screen.getByAltText(/test/i)).toBeInTheDocument();
     expect(screen.getByText(/test/i)).toBeInTheDocument();
@@ -13,7 +18,11 @@ describe('Card component', () => {
   });
 
   it('renders "TBD" if year is null', () => {
-    render(<Card item={{ ...mockItem, year: null }}></Card>);
+    render(
+      <MemoryRouter>
+        <Card item={{ ...mockItem, year: null }}></Card>
+      </MemoryRouter>
+    );
 
     expect(screen.getByText(/TBD/i)).toBeInTheDocument();
   });

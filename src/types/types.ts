@@ -20,6 +20,7 @@ export type CardProps = {
 };
 
 export type CardItem = {
+  mal_id: number;
   title: string;
   year: number | null;
   images: {
@@ -27,7 +28,7 @@ export type CardItem = {
       large_image_url: string;
     };
   };
-  mal_id: number;
+
   score: number;
   aired: {
     from: string;

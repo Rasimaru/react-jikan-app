@@ -1,5 +1,5 @@
 import { type JSX } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router';
 
 import Layout from '@/components/layout/Layout';
 
@@ -11,15 +11,13 @@ import { BASE_PATH } from './types/constants';
 
 const App = (): JSX.Element => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={BASE_PATH} element={<Layout />}>
-          <Route index element={<MainPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path={BASE_PATH} element={<Layout />}>
+        <Route index element={<MainPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 };
 
