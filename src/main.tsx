@@ -9,9 +9,9 @@ const root = document.getElementById('root');
 if (!root) throw new Error('No root Element!');
 
 createRoot(root).render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>
+  // </React.StrictMode>
 );

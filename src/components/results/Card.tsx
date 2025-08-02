@@ -1,17 +1,21 @@
 import { type JSX } from 'react';
 import type { CardProps } from '@/types/types';
 import { StarIcon } from 'lucide-react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 
 const Card = (props: CardProps): JSX.Element => {
   const { mal_id, title, year, images, score } = props.item;
 
+  const [searchParams] = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  params.set('details', mal_id.toString());
+
   return (
     <Link
-      to={mal_id.toString()}
+      to={`?${params.toString()}`}
       aria-label={`View details for ${title}`}
       role="listitem"
-      className="hover:scale-102 duration-300 rounded-xl max-w-[300px]"
+      className="hover:scale-102 duration-300 rounded-xl max-[450]:max-w-[300px]"
     >
       <div className="flex flex-col border-1 rounded-xl overflow-clip relative h-full">
         <div className="aspect-[3/4] relative">

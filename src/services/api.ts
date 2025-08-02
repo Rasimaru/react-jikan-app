@@ -1,5 +1,5 @@
 import { API_SEARCH, API_TOP_AIRING } from '@/types/constants';
-import { type JikanApiResponse } from '@/types/types';
+import { type JikanApiResponse, type JikanApiResponseId } from '@/types/types';
 import checkResponse from '@/utils/http/checkResponse';
 
 const getSeasonTop = async (page: number): Promise<JikanApiResponse> => {
@@ -22,4 +22,12 @@ const fetchData = async (query: string, page: number = 1): Promise<JikanApiRespo
   return query.length ? searchAnime(query, page) : getSeasonTop(page);
 };
 
-export default fetchData;
+const fetchDataWithId = async (id: number): Promise<JikanApiResponseId> => {
+  const url = `${API_SEARCH}${id}`;
+
+  const res = await fetch(url);
+  const data: JikanApiResponseId = await checkResponse(res);
+  return data;
+};
+
+export { fetchData, fetchDataWithId };

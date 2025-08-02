@@ -32,6 +32,9 @@ export type CardItem = {
   aired: {
     from: string;
   };
+  synopsis?: string;
+  source?: string;
+  duration?: string;
 };
 
 export type SearchProps = {
@@ -63,4 +66,9 @@ export type JikanApiResponse = {
 
 export type JikanApiResponseId = {
   data: CardItem;
+};
+
+export type DetailsProps = {
+  card: CardItem;
+  onClose: () => void;
 };

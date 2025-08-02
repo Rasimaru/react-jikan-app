@@ -1,14 +1,12 @@
-import { useSearchParams } from 'react-router';
+import useUrlParams from './useUrlParams';
 
 const usePagination = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
+  const { getParam, setParams } = useUrlParams();
+  const currentPage = Number(getParam('page')) || 1;
 
   const changePage = (newPage: number): void => {
     if (newPage > 0) {
-      const params = new URLSearchParams(searchParams);
-      params.set('page', newPage.toString());
-      setSearchParams(params);
+      setParams({ page: newPage.toString() });
     }
   };
 

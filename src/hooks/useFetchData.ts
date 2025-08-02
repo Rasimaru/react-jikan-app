@@ -1,6 +1,6 @@
-import fetchData from '@/services/api';
-import type { CardItem } from '@/types/types';
 import { useEffect, useState } from 'react';
+import { fetchData } from '@/services/api';
+import type { CardItem } from '@/types/types';
 
 const useFetchData = (query: string, page: number) => {
   const [items, setItems] = useState<CardItem[]>([]);
@@ -19,7 +19,7 @@ const useFetchData = (query: string, page: number) => {
         setItems(data.data);
       })
       .catch((error: Error) => {
-        console.error('Fetch error', error);
+        console.error('Fetch results error', error);
         setError(error.message);
       })
       .finally(() => setIsLoading(false));
