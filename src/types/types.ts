@@ -33,9 +33,9 @@ export type CardItem = {
   aired: {
     from: string;
   };
-  synopsis?: string;
-  source?: string;
-  duration?: string;
+  synopsis: string;
+  source: string;
+  duration: string;
 };
 
 export type SearchProps = {

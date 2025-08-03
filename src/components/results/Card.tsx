@@ -1,14 +1,36 @@
 import { type JSX } from 'react';
 import type { CardProps } from '@/types/types';
-import { StarIcon } from 'lucide-react';
+import { LucideCheckCircle, LucideCircle, StarIcon } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { addSelected, removeSelected } from '@/store/selectedSlice';
 
 const Card = (props: CardProps): JSX.Element => {
-  const { mal_id, title, year, images, score } = props.item;
+  const { mal_id, title, year, images, score, synopsis } = props.item;
+
+  const dispatch = useAppDispatch();
+  const isSelected = useAppSelector((state) =>
+    state.selected.selectedItems.some((item) => item.id === mal_id.toString())
+  );
 
   const [searchParams] = useSearchParams();
   const params = new URLSearchParams(searchParams);
   params.set('details', mal_id.toString());
+
+  const handleCheckboxChange = () => {
+    const item = {
+      id: mal_id.toString(),
+      name: title,
+      year: year?.toString() ?? 'TBD',
+      description: synopsis,
+      url: images.webp.large_image_url
+    };
+    if (isSelected) {
+      dispatch(removeSelected(item.id));
+    } else {
+      dispatch(addSelected(item));
+    }
+  };
 
   return (
     <Link
@@ -37,6 +59,17 @@ const Card = (props: CardProps): JSX.Element => {
             className="h-3 w-3 mr-1 text-yellow-400 fill-yellow-400"
           ></StarIcon>
           <span>{score}</span>
+        </div>
+        <div className="p-2 min-w-[100px] rounded-md bg-black/70 text-white flex items-center justify-between bg-muted/20 absolute top-0 left-0">
+          <label
+            role="checkbox"
+            onClick={(e) => e.stopPropagation()}
+            className="flex items-center gap-1.5 text-sm cursor-pointer"
+          >
+            <input type="checkbox" hidden checked={isSelected} onChange={handleCheckboxChange} />
+            {isSelected ? <LucideCheckCircle /> : <LucideCircle />}
+            {isSelected ? 'Selected' : 'Select'}
+          </label>
         </div>
       </div>
     </Link>
