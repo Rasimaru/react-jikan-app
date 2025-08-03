@@ -1,4 +1,4 @@
-import type { Theme, ThemeState } from '@/types/types';
+import type { Theme } from '@/types/types';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 const getInitialTheme = (): Theme => {
@@ -9,7 +9,7 @@ const getInitialTheme = (): Theme => {
   return 'system';
 };
 
-const initialState: ThemeState = {
+const initialState = {
   current: getInitialTheme()
 };
 
