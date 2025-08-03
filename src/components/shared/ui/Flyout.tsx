@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { clearAll } from '@/store/selectedSlice';
 import { BrushCleaning, Download, PanelLeftOpen, PanelRightOpen } from 'lucide-react';
 import { useState, type JSX } from 'react';
+import { saveAs } from 'file-saver';
 
 const Flyout = (): JSX.Element | null => {
   const dispatch = useAppDispatch();
@@ -24,14 +25,11 @@ const Flyout = (): JSX.Element | null => {
         .map((field) => `"${field.replace(/"/g, '""')}"`)
         .join(';')
     );
+
     const csvContent = [csvHeader, ...csvRows].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${selectedItems.length}_items.csv`;
-    link.click();
+    saveAs(blob, `${selectedItems.length}_items.csv`);
   };
 
   return (
