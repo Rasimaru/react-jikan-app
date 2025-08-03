@@ -1,17 +1,16 @@
 import ThemeSwitcher from '@/components/shared/ui/ThemeSwitcher';
-import store from '@/store';
+import ThemeProvider from '@/context/ThemeContext';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
 describe('Theme switcher component', () => {
   it('renders switcher button', async () => {
     render(
       <MemoryRouter>
-        <Provider store={store}>
+        <ThemeProvider>
           <ThemeSwitcher />
-        </Provider>
+        </ThemeProvider>
       </MemoryRouter>
     );
 

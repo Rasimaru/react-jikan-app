@@ -1,4 +1,5 @@
 import Layout from '@/components/layout/Layout';
+import ThemeProvider from '@/context/ThemeContext';
 import AboutPage from '@/pages/AboutPage';
 import store from '@/store';
 import { render, screen } from '@testing-library/react';
@@ -10,11 +11,13 @@ describe('About page', () => {
     render(
       <MemoryRouter initialEntries={['/about']}>
         <Provider store={store}>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route path="about" element={<AboutPage />} />
-            </Route>
-          </Routes>
+          <ThemeProvider>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route path="about" element={<AboutPage />} />
+              </Route>
+            </Routes>
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     );

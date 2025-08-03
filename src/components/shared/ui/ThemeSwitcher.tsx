@@ -1,12 +1,10 @@
-import { useEffect, useState, type JSX } from 'react';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { setTheme } from '@/store/themeSlice';
+import { useState, type JSX } from 'react';
 import { Laptop2, Moon, Sun } from 'lucide-react';
 import type { Theme, ThemeOption } from '@/types/types';
+import useTheme from '@/hooks/useTheme';
 
 const ThemeSwitcher = (): JSX.Element => {
-  const theme = useAppSelector((state) => state.theme.current);
-  const dispatch = useAppDispatch();
+  const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
 
   const options: ThemeOption[] = [
@@ -17,37 +15,13 @@ const ThemeSwitcher = (): JSX.Element => {
 
   const selected = options.find((opt) => opt.value === theme);
 
-  useEffect(() => {
-    const root = document.documentElement;
-
-    const applyTheme = (mode: 'light' | 'dark') => {
-      root.classList.toggle('dark', mode === 'dark');
-      root.classList.toggle('light', mode === 'light');
-    };
-
-    const systemPreference = window.matchMedia('(prefers-color-scheme: dark)');
-
-    const handleSystemChange = (e?: MediaQueryListEvent) => {
-      const isDark = e ? e.matches : systemPreference.matches;
-      applyTheme(isDark ? 'dark' : 'light');
-    };
-
-    if (theme === 'system') {
-      handleSystemChange();
-      systemPreference.addEventListener('change', handleSystemChange);
-      return () => systemPreference.removeEventListener('change', handleSystemChange);
-    } else {
-      applyTheme(theme);
-    }
-  }, [theme]);
-
   const handleChange = (theme: Theme) => {
-    dispatch(setTheme(theme));
+    setTheme(theme);
     setOpen(false);
   };
 
   return (
-    <div className="relative inline-block text-left ">
+    <div className="relative inline-block text-left">
       <button
         name={theme}
         data-testid="themeSwitch"

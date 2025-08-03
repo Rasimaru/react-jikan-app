@@ -1,4 +1,5 @@
 import Header from '@/components/layout/Header';
+import ThemeProvider from '@/context/ThemeContext';
 import store from '@/store';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -9,7 +10,9 @@ describe('Header component', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <Header />
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     );

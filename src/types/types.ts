@@ -90,8 +90,9 @@ export type SelectedState = {
 
 export type Theme = 'light' | 'dark' | 'system';
 
-export type ThemeState = {
-  current: Theme;
+export type ThemeContextType = {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
 };
 
 export type ThemeOption = {

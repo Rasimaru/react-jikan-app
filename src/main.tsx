@@ -6,6 +6,7 @@ import ErrorBoundary from './components/shared/error/ErrorBoundary.tsx';
 import { BrowserRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import store from './store/index.ts';
+import ThemeProvider from './context/ThemeContext.tsx';
 
 const root = document.getElementById('root');
 
@@ -16,7 +17,9 @@ createRoot(root).render(
     <BrowserRouter>
       <ErrorBoundary>
         <Provider store={store}>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </Provider>
       </ErrorBoundary>
     </BrowserRouter>

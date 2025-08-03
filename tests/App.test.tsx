@@ -1,4 +1,5 @@
 import App from '@/App';
+import ThemeProvider from '@/context/ThemeContext';
 import store from '@/store';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -9,7 +10,9 @@ describe('App component', () => {
     render(
       <MemoryRouter initialEntries={['/react-jikan-app/']}>
         <Provider store={store}>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     );
@@ -20,7 +23,9 @@ describe('App component', () => {
     render(
       <MemoryRouter initialEntries={['/react-jikan-app/about']}>
         <Provider store={store}>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     );
@@ -31,7 +36,9 @@ describe('App component', () => {
     render(
       <MemoryRouter initialEntries={['/react-jikan-app/unknown']}>
         <Provider store={store}>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </Provider>
       </MemoryRouter>
     );
