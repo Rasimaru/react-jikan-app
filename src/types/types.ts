@@ -1,10 +1,14 @@
-import type { ReactNode } from 'react';
-
-export type AppState = {
+export type ResultsProps = {
   items: CardItem[];
   searchQuery: string;
   isLoading: boolean;
   error: string | null;
+};
+
+export type PaginationProps = {
+  page: number;
+  totalPages: number;
+  onPageChange: (newPage: number) => void;
 };
 
 export type CardListProps = {
@@ -16,6 +20,7 @@ export type CardProps = {
 };
 
 export type CardItem = {
+  mal_id: number;
   title: string;
   year: number | null;
   images: {
@@ -23,23 +28,17 @@ export type CardItem = {
       large_image_url: string;
     };
   };
-  mal_id: number;
+
   score: number;
   aired: {
     from: string;
   };
+  synopsis?: string;
+  source?: string;
+  duration?: string;
 };
 
-export type LayoutProps = {
-  children: ReactNode;
-};
-
-export type HeroProps = {
-  onSearch: (query: string) => void;
-  searchQuery: string;
-};
-
-export type SearchBarProps = {
+export type SearchProps = {
   onSearch: (query: string) => void;
   searchQuery: string;
 };
@@ -53,10 +52,24 @@ export type BoundaryState = {
   hasError: boolean;
 };
 
-export type ErrorButtonState = {
-  shouldThrow: boolean;
+export type FallbackProps = {
+  onReset: () => void;
 };
 
 export type JikanApiResponse = {
+  pagination: {
+    last_visible_page: number;
+    current_page: number;
+    has_next_page: boolean;
+  };
   data: CardItem[];
+};
+
+export type JikanApiResponseId = {
+  data: CardItem;
+};
+
+export type DetailsProps = {
+  card: CardItem;
+  onClose: () => void;
 };
