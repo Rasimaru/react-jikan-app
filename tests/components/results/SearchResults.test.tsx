@@ -3,20 +3,24 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { mockItems } from '../../mocks/data/items';
 import userEvent from '@testing-library/user-event';
+import store from '@/store';
+import { Provider } from 'react-redux';
 
 describe('SearchResults component', () => {
   it('renders loader while loading', () => {
     render(
       <MemoryRouter>
-        <SearchResults
-          items={mockItems}
-          searchQuery=""
-          isLoading={true}
-          error={null}
-          page={1}
-          totalPages={2}
-          onPageChange={jest.fn()}
-        />
+        <Provider store={store}>
+          <SearchResults
+            items={mockItems}
+            searchQuery=""
+            isLoading={true}
+            error={null}
+            page={1}
+            totalPages={2}
+            onPageChange={jest.fn()}
+          />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -26,15 +30,17 @@ describe('SearchResults component', () => {
   it('shows error message if error occurs', () => {
     render(
       <MemoryRouter>
-        <SearchResults
-          items={mockItems}
-          searchQuery=""
-          isLoading={false}
-          error={'Something went wrong'}
-          page={1}
-          totalPages={2}
-          onPageChange={jest.fn()}
-        />
+        <Provider store={store}>
+          <SearchResults
+            items={mockItems}
+            searchQuery=""
+            isLoading={false}
+            error={'Something went wrong'}
+            page={1}
+            totalPages={2}
+            onPageChange={jest.fn()}
+          />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -44,15 +50,17 @@ describe('SearchResults component', () => {
   it('shows result message if nothing found matching', () => {
     render(
       <MemoryRouter>
-        <SearchResults
-          items={[]}
-          searchQuery="test"
-          isLoading={false}
-          error={null}
-          page={1}
-          totalPages={2}
-          onPageChange={jest.fn()}
-        />
+        <Provider store={store}>
+          <SearchResults
+            items={[]}
+            searchQuery="test"
+            isLoading={false}
+            error={null}
+            page={1}
+            totalPages={2}
+            onPageChange={jest.fn()}
+          />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -62,15 +70,17 @@ describe('SearchResults component', () => {
   it('renders results with pagination', async () => {
     render(
       <MemoryRouter>
-        <SearchResults
-          items={mockItems}
-          searchQuery=""
-          isLoading={false}
-          error={null}
-          page={1}
-          totalPages={2}
-          onPageChange={jest.fn()}
-        />
+        <Provider store={store}>
+          <SearchResults
+            items={mockItems}
+            searchQuery=""
+            isLoading={false}
+            error={null}
+            page={1}
+            totalPages={2}
+            onPageChange={jest.fn()}
+          />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -84,15 +94,17 @@ describe('SearchResults component', () => {
 
     const { rerender } = render(
       <MemoryRouter>
-        <SearchResults
-          items={mockItems}
-          searchQuery=""
-          isLoading={false}
-          error={null}
-          page={1}
-          totalPages={2}
-          onPageChange={onPageChange}
-        />
+        <Provider store={store}>
+          <SearchResults
+            items={mockItems}
+            searchQuery=""
+            isLoading={false}
+            error={null}
+            page={1}
+            totalPages={2}
+            onPageChange={onPageChange}
+          />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -106,15 +118,17 @@ describe('SearchResults component', () => {
     onPageChange.mockClear();
     rerender(
       <MemoryRouter>
-        <SearchResults
-          items={mockItems}
-          searchQuery=""
-          isLoading={false}
-          error={null}
-          page={2}
-          totalPages={2}
-          onPageChange={onPageChange}
-        />
+        <Provider store={store}>
+          <SearchResults
+            items={mockItems}
+            searchQuery=""
+            isLoading={false}
+            error={null}
+            page={2}
+            totalPages={2}
+            onPageChange={onPageChange}
+          />
+        </Provider>
       </MemoryRouter>
     );
 

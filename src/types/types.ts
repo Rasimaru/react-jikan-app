@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 export type ResultsProps = {
   items: CardItem[];
   searchQuery: string;
@@ -33,9 +35,9 @@ export type CardItem = {
   aired: {
     from: string;
   };
-  synopsis?: string;
-  source?: string;
-  duration?: string;
+  synopsis: string;
+  source: string;
+  duration: string;
 };
 
 export type SearchProps = {
@@ -72,4 +74,29 @@ export type JikanApiResponseId = {
 export type DetailsProps = {
   card: CardItem;
   onClose: () => void;
+};
+
+export type SelectedItem = {
+  id: string;
+  name: string;
+  year: string;
+  description: string;
+  url: string;
+};
+
+export type SelectedState = {
+  selectedItems: SelectedItem[];
+};
+
+export type Theme = 'light' | 'dark' | 'system';
+
+export type ThemeContextType = {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+};
+
+export type ThemeOption = {
+  value: Theme;
+  label: string;
+  icon: JSX.Element;
 };

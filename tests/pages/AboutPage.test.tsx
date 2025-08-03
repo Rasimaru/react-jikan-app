@@ -1,17 +1,24 @@
 import Layout from '@/components/layout/Layout';
+import ThemeProvider from '@/context/ThemeContext';
 import AboutPage from '@/pages/AboutPage';
+import store from '@/store';
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
 describe('About page', () => {
   it('renders on first mount', () => {
     render(
       <MemoryRouter initialEntries={['/about']}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="about" element={<AboutPage />} />
-          </Route>
-        </Routes>
+        <Provider store={store}>
+          <ThemeProvider>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route path="about" element={<AboutPage />} />
+              </Route>
+            </Routes>
+          </ThemeProvider>
+        </Provider>
       </MemoryRouter>
     );
 

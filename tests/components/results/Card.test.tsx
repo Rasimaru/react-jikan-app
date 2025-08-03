@@ -2,12 +2,17 @@ import Card from '@/components/results/Card';
 import { render, screen } from '@testing-library/react';
 import { mockItem } from '../../mocks/data/items';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import store from '@/store';
+import userEvent from '@testing-library/user-event';
 
 describe('Card component', () => {
   it('renders title, year, image alt and score from props', () => {
     render(
       <MemoryRouter>
-        <Card item={mockItem}></Card>
+        <Provider store={store}>
+          <Card item={mockItem} />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -20,10 +25,28 @@ describe('Card component', () => {
   it('renders "TBD" if year is null', () => {
     render(
       <MemoryRouter>
-        <Card item={{ ...mockItem, year: null }}></Card>
+        <Provider store={store}>
+          <Card item={{ ...mockItem, year: null }} />
+        </Provider>
       </MemoryRouter>
     );
 
     expect(screen.getByText(/TBD/i)).toBeInTheDocument();
+  });
+
+  it('changes checked state on click', async () => {
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <Card item={mockItem} />
+        </Provider>
+      </MemoryRouter>
+    );
+
+    const checkbox = screen.getByRole('checkbox');
+    await userEvent.click(checkbox);
+
+    expect(screen.getByText('Selected')).toBeInTheDocument();
+    expect(screen.getByTestId(/CheckedIcon/i)).toBeInTheDocument();
   });
 });
