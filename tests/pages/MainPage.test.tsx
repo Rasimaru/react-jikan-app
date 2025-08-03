@@ -4,6 +4,8 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import MainPage from '@/pages/MainPage';
 import { mockItem, mockPagination } from '../mocks/data/items';
+import { Provider } from 'react-redux';
+import store from '@/store';
 
 describe('Main page', () => {
   beforeEach(() => {
@@ -19,7 +21,9 @@ describe('Main page', () => {
   it('renders on first mount', () => {
     render(
       <MemoryRouter>
-        <MainPage />
+        <Provider store={store}>
+          <MainPage />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -36,7 +40,9 @@ describe('Main page', () => {
       );
     render(
       <MemoryRouter>
-        <MainPage />
+        <Provider store={store}>
+          <MainPage />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -63,7 +69,9 @@ describe('Main page', () => {
     const user = userEvent.setup();
     render(
       <MemoryRouter>
-        <MainPage />
+        <Provider store={store}>
+          <MainPage />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -89,7 +97,9 @@ describe('Main page', () => {
       );
     render(
       <MemoryRouter>
-        <MainPage />
+        <Provider store={store}>
+          <MainPage />
+        </Provider>
       </MemoryRouter>
     );
 
@@ -104,7 +114,9 @@ describe('Main page', () => {
       );
     render(
       <MemoryRouter>
-        <MainPage />
+        <Provider store={store}>
+          <MainPage />
+        </Provider>
       </MemoryRouter>
     );
 
