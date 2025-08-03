@@ -41,7 +41,7 @@ const SearchBar = (props: SearchProps): JSX.Element => {
           value={localQuery}
           onChange={handleChange}
           placeholder="Search for anime or manga..."
-          className="flex grow rounded-md border bg-background px-3 py-2 text-base md:text-lg pl-10 h-12 rounded-r-none max-[380px]:pr-0"
+          className="flex grow rounded-md border bg-background px-3 py-2 text-base md:text-lg pl-10 h-12 rounded-r-none max-[380px]:pr-0 placeholder:text-gray-400"
         ></input>
       </label>
       <button

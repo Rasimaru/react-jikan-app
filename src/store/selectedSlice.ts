@@ -1,16 +1,5 @@
+import type { SelectedItem, SelectedState } from '@/types/types';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-
-export interface SelectedItem {
-  id: string;
-  name: string;
-  year: string;
-  description: string;
-  url: string;
-}
-
-type SelectedState = {
-  selectedItems: SelectedItem[];
-};
 
 const initialState: SelectedState = {
   selectedItems: []
