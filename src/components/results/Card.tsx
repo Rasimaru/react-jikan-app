@@ -67,7 +67,7 @@ const Card = (props: CardProps): JSX.Element => {
             className="flex items-center gap-1.5 text-sm cursor-pointer"
           >
             <input type="checkbox" hidden checked={isSelected} onChange={handleCheckboxChange} />
-            {isSelected ? <LucideCheckCircle /> : <LucideCircle />}
+            {isSelected ? <LucideCheckCircle data-testid={'CheckedIcon'} /> : <LucideCircle />}
             {isSelected ? 'Selected' : 'Select'}
           </label>
         </div>

@@ -49,6 +49,8 @@ const ThemeSwitcher = (): JSX.Element => {
   return (
     <div className="relative inline-block text-left ">
       <button
+        name={theme}
+        data-testid="themeSwitch"
         aria-label="Color theme switcher"
         onClick={() => setOpen(!open)}
         className="flex items-center justify-center gap-2 border w-10 h-10 rounded-md hover:cursor-pointer hover:bg-amber-300 hover:text-black duration-300"
@@ -61,6 +63,7 @@ const ThemeSwitcher = (): JSX.Element => {
           {options.map((opt) => (
             <button
               key={opt.value}
+              data-testid={`${opt.value}switcher`}
               onClick={() => handleChange(opt.value)}
               className={`flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-amber-300 dark:hover:text-black hover:cursor-pointer duration-300 rounded ${
                 opt.value === theme ? 'font-semibold' : ''

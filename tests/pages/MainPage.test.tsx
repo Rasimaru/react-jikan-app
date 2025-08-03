@@ -3,9 +3,11 @@ import userEvent from '@testing-library/user-event';
 
 import { MemoryRouter } from 'react-router';
 import MainPage from '@/pages/MainPage';
-import { mockItem, mockPagination } from '../mocks/data/items';
+import { mockItem, mockItems, mockPagination } from '../mocks/data/items';
 import { Provider } from 'react-redux';
 import store from '@/store';
+import SearchResults from '@/components/results/SearchResults';
+import Flyout from '@/components/shared/ui/Flyout';
 
 describe('Main page', () => {
   beforeEach(() => {
@@ -123,5 +125,50 @@ describe('Main page', () => {
     await waitFor(() => {
       expect(screen.getByText(/nothing found/i)).toBeInTheDocument();
     });
+  });
+
+  it('renders Flyout component with checked item', async () => {
+    const onPageChange = jest.fn();
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <SearchResults
+            items={mockItems}
+            searchQuery=""
+            isLoading={false}
+            error={null}
+            page={1}
+            totalPages={2}
+            onPageChange={onPageChange}
+          />
+          <Flyout></Flyout>
+        </Provider>
+      </MemoryRouter>
+    );
+
+    expect(screen.queryByText(/1 item selected/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId('extender')).not.toBeInTheDocument();
+
+    const checkbox = screen.getAllByRole('checkbox')[0];
+    await userEvent.click(checkbox);
+
+    const extender = screen.getByTestId('extender');
+    expect(extender).toBeInTheDocument();
+    await userEvent.click(extender);
+
+    const remover = screen.getByTestId('remover');
+    expect(remover).toBeInTheDocument();
+    const downloader = screen.getByTestId('downloader');
+    expect(downloader).toBeInTheDocument();
+    const shortener = screen.getByTestId('shortener');
+    expect(shortener).toBeInTheDocument();
+    await userEvent.click(shortener);
+
+    await userEvent.click(remover);
+    expect(downloader).not.toBeInTheDocument();
+
+    await userEvent.click(checkbox);
+    await userEvent.click(checkbox);
+    expect(checkbox).not.toBeChecked();
   });
 });
