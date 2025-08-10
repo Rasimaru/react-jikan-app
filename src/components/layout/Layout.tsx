@@ -10,7 +10,7 @@ const Layout = (): JSX.Element => {
       <Header />
       <main
         role="main"
-        className="container grow sm:gap-20 gap-10 flex flex-col justify-start items-center w-full"
+        className="container grow sm:gap-20 gap-15 flex flex-col justify-start items-center w-full"
       >
         <Outlet />
         <Flyout />

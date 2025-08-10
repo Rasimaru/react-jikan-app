@@ -46,8 +46,12 @@ const DetailsDrawer = (props: { id: number }): JSX.Element => {
       <section
         className={`flex flex-col gap-4 fixed top-0 h-full lg:w-1/2 sm:w-2/3 right-0 bg-white dark:bg-neutral-800 shadow-lg p-4 z-50 transform transition-transform duration-300 overflow-y-scroll ${visible ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        {isLoading && <Spinner />}
-        {isFetching && !isLoading && <p className="text-lg">Reloading...</p>}
+        {isLoading && (
+          <div className="m-auto">
+            <Spinner />
+          </div>
+        )}
+        {isFetching && !isLoading && <p className="text-lg m-auto">Reloading...</p>}
         {error && <p>{errorMessage}</p>}
         {!isLoading && !isFetching && !error && data?.data && (
           <CardDetails

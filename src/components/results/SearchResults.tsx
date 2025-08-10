@@ -19,22 +19,26 @@ const SearchResults = (props: ResultsProps & PaginationProps): JSX.Element => {
 
   const [refreshAnime, { isLoading: isRefreshing }] = useRefreshAnimeMutation();
 
-  if (isLoading) return <Spinner />;
-  if (isFetching && !isLoading) return <p className="text-lg">Reloading...</p>;
-  if (error) return <p>{error}</p>;
-
-  if (isEmpty)
-    return (
-      <p role="alert" className="text-center text-[18px]">
-        Nothing found matching &quot;{searchQuery}&quot;
-      </p>
-    );
-
   return (
-    <section aria-label="search results" className="flex flex-col gap-10 sm:pb-10 pb-5 relative">
-      <CardList items={items} />
-      <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
-      {detailsId && !isFetching && <DetailsDrawer id={detailsId} />}
+    <section
+      aria-label="search results"
+      className="flex flex-col gap-10 sm:pb-10 pb-5 relative w-full"
+    >
+      {isLoading && <Spinner />}
+      {isFetching && <p className="text-lg m-auto">Reloading...</p>}
+      {error && <p>{error}</p>}
+      {!isLoading && !isFetching && !isEmpty && !error && !isEmpty && (
+        <>
+          <CardList items={items} />
+          <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+          {detailsId && <DetailsDrawer id={detailsId} />}
+        </>
+      )}
+      {isEmpty && (
+        <p role="alert" className="text-center text-[18px]">
+          Nothing found matching &quot;{searchQuery}&quot;
+        </p>
+      )}
       <RefreshButton isRefreshing={isRefreshing} onRefresh={refreshAnime} />
     </section>
   );
