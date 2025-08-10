@@ -2,15 +2,22 @@ import type { DetailsProps } from '@/types/types';
 import { type JSX } from 'react';
 
 const CardDetails = (props: DetailsProps): JSX.Element => {
-  const { card, onClose } = props;
+  const { card, onClose, onRefresh, isRefreshing } = props;
   return (
     <>
-      <div className="flex flex-col relative">
+      <div className="flex flex-col gap-5 relative">
         <button
           onClick={onClose}
           className="absolute inline-flex self-end bg-amber-500 text-black border-0 py-1.5 px-3 focus:outline-none hover:bg-amber-300 hover:cursor-pointer rounded text-base font-semibold duration-300 z-10"
         >
           Close
+        </button>
+        <button
+          disabled={isRefreshing}
+          onClick={onRefresh}
+          className="absolute left-0 inline-flex self-end bg-amber-500 text-black border-0 py-1.5 px-3 focus:outline-none hover:bg-amber-300 hover:cursor-pointer rounded text-base font-semibold duration-300 z-10"
+        >
+          Refresh
         </button>
         <div className="flex min-[450px]:flex-row flex-col gap-5 justify-center w-full h-full items-center">
           <div className="basis-1/3 aspect-[3/4] max-[450px]:w-full min-[450px]:min-h-[250px] relative">
@@ -36,8 +43,8 @@ const CardDetails = (props: DetailsProps): JSX.Element => {
             </div>
           </div>
         </div>
+        <p className="grow text-[15px] text-justify">{card?.synopsis}</p>
       </div>
-      <p className="grow text-[15px] text-justify">{card?.synopsis}</p>
     </>
   );
 };
