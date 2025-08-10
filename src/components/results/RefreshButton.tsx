@@ -10,6 +10,7 @@ const RefreshButton = (props: RefreshButtonProps) => {
   return (
     <div className="w-full">
       <button
+        data-testid="RefreshBtn"
         disabled={isRefreshing}
         onClick={onRefresh}
         className="absolute left-0 sm:-top-15 -top-12.5 inline-flex justify-center items-center bg-amber-500 text-black py-2 px-3 hover:bg-amber-300 hover:cursor-pointer rounded duration-300 font-semibold text-base"

@@ -34,7 +34,7 @@ const SearchResults = (props: ResultsProps & PaginationProps): JSX.Element => {
           {detailsId && <DetailsDrawer id={detailsId} />}
         </>
       )}
-      {isEmpty && (
+      {!error && isEmpty && (
         <p role="alert" className="text-center text-[18px]">
           Nothing found matching &quot;{searchQuery}&quot;
         </p>

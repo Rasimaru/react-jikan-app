@@ -28,7 +28,7 @@ describe('SearchBar component', () => {
 
     expect(onSearchMock).toHaveBeenCalledWith('Witch');
     expect(onSearchMock).toHaveBeenCalledTimes(1);
-    expect(localStorage.getItem('searchQuery')).toBe('Witch');
+    expect(localStorage.getItem('searchQuery')).toBe(JSON.stringify('Witch'));
   });
 
   it('handles error when reading from localStorage', async () => {
