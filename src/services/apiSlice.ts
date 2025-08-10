@@ -43,7 +43,10 @@ const apiSlice = createApi({
       queryFn: () => ({ data: undefined }),
       invalidatesTags: (_result, _error, id) => [{ type: 'Anime', id }]
     })
-  })
+  }),
+  keepUnusedDataFor: 60,
+  refetchOnFocus: true,
+  refetchOnReconnect: true
 });
 
 export const {
