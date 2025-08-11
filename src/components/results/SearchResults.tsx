@@ -6,30 +6,40 @@ import Spinner from '../shared/ui/Spinner';
 import CardList from './CardList';
 import Pagination from './Pagination';
 import DetailsDrawer from './DetailsDrawer';
+import RefreshButton from './RefreshButton';
+import { useRefreshAnimeMutation } from '@/services/apiSlice';
 
 const SearchResults = (props: ResultsProps & PaginationProps): JSX.Element => {
-  const { items, isLoading, error, searchQuery, page, totalPages, onPageChange } = props;
+  const { items, isLoading, isFetching, error, searchQuery, page, totalPages, onPageChange } =
+    props;
   const [searchParams] = useSearchParams();
   const detailsId = Number(searchParams.get('details')) || null;
 
   const isEmpty = items.length === 0;
 
-  if (isLoading) return <Spinner />;
-
-  if (error) return <p>{error}</p>;
-
-  if (isEmpty)
-    return (
-      <p role="alert" className="text-center text-[18px]">
-        Nothing found matching &quot;{searchQuery}&quot;
-      </p>
-    );
+  const [refreshAnime, { isLoading: isRefreshing }] = useRefreshAnimeMutation();
 
   return (
-    <section aria-label="search results" className="flex flex-col gap-10 sm:pb-10 pb-5">
-      <CardList items={items} />
-      <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
-      {detailsId && <DetailsDrawer id={detailsId} />}
+    <section
+      aria-label="search results"
+      className="flex flex-col gap-10 sm:pb-10 pb-5 relative w-full"
+    >
+      {isLoading && <Spinner />}
+      {isFetching && <p className="text-lg m-auto">Reloading...</p>}
+      {error && <p>{error}</p>}
+      {!isLoading && !isFetching && !isEmpty && !error && !isEmpty && (
+        <>
+          <CardList items={items} />
+          <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+          {detailsId && <DetailsDrawer id={detailsId} />}
+        </>
+      )}
+      {!error && isEmpty && (
+        <p role="alert" className="text-center text-[18px]">
+          Nothing found matching &quot;{searchQuery}&quot;
+        </p>
+      )}
+      <RefreshButton isRefreshing={isRefreshing} onRefresh={refreshAnime} />
     </section>
   );
 };

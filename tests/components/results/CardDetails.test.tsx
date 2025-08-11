@@ -7,7 +7,12 @@ describe('CardDetails component', () => {
   it('renders title, year, image alt and source from props', () => {
     render(
       <MemoryRouter>
-        <CardDetails card={mockItem} onClose={jest.fn()}></CardDetails>
+        <CardDetails
+          card={mockItem}
+          isRefreshing={false}
+          onRefresh={jest.fn()}
+          onClose={jest.fn()}
+        ></CardDetails>
       </MemoryRouter>
     );
 

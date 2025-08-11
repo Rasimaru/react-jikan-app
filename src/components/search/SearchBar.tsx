@@ -46,7 +46,7 @@ const SearchBar = (props: SearchProps): JSX.Element => {
       </label>
       <button
         type="submit"
-        className="inline-flex items-center bg-amber-500 text-black py-1 px-3 hover:bg-amber-300 dark:hover:bg-gray-100 hover:cursor-pointer rounded-r text-base duration-300 font-semibold"
+        className="inline-flex items-center bg-amber-500 text-black py-1 px-3 hover:bg-amber-300 hover:cursor-pointer rounded-r text-base duration-300 font-semibold"
       >
         Search
       </button>

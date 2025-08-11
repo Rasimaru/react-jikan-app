@@ -1,16 +1,11 @@
+import useLocalStorage from '@/hooks/useLocalStorage';
 import type { Theme, ThemeContextType } from '@/types/types';
-import { createContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useEffect, type ReactNode } from 'react';
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const getInitialTheme = (): Theme => {
-    const saved = localStorage.getItem('theme') as Theme | null;
-    if (saved) return saved;
-    return 'system';
-  };
-
-  const [theme, setThemeState] = useState<Theme>(getInitialTheme());
+  const [theme, setTheme] = useLocalStorage<Theme>('theme', 'system');
 
   const applyTheme = (mode: 'light' | 'dark') => {
     const root = document.documentElement;
@@ -29,19 +24,16 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
     if (theme === 'system') {
       handleSystemChange();
       systemPreference.addEventListener('change', handleSystemChange);
-      localStorage.setItem('theme', theme);
+      setTheme(theme);
       return () => systemPreference.removeEventListener('change', handleSystemChange);
     } else {
       applyTheme(theme);
     }
-
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    setTheme(theme);
+  }, [theme, setTheme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: setThemeState }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={{ theme, setTheme: setTheme }}>{children}</ThemeContext.Provider>
   );
 };
 

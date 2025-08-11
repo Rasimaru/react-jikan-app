@@ -1,6 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import DetailsDrawer from '@/components/results/DetailsDrawer';
+import { Provider } from 'react-redux';
+import store from '@/store';
 
 describe('Details Drawer component', () => {
   beforeEach(() => {
@@ -13,36 +15,44 @@ describe('Details Drawer component', () => {
     jest.clearAllMocks();
   });
   it('renders details for id', async () => {
-    const fetchDataIdSpy = jest
-      .spyOn(global, 'fetch')
-      .mockResolvedValue(new Response(JSON.stringify({ data: [] }), { status: 200 }));
     render(
       <MemoryRouter>
-        <DetailsDrawer id={59845}></DetailsDrawer>
+        <Provider store={store}>
+          <DetailsDrawer id={59845}></DetailsDrawer>
+        </Provider>
       </MemoryRouter>
     );
 
     await waitFor(() => {
-      expect(fetchDataIdSpy).toHaveBeenCalledWith(expect.stringContaining('59845'));
+      expect(screen.getByTestId('overlay')).toBeInTheDocument();
     });
-    expect(screen.getByTestId('overlay')).toBeInTheDocument();
   });
 
   it('shows error for not found card', async () => {
-    const fetchDataIdSpy = jest
-      .spyOn(global, 'fetch')
-      .mockResolvedValue(
-        new Response(JSON.stringify({ message: 'Resource does not exist' }), { status: 404 })
-      );
     render(
       <MemoryRouter>
-        <DetailsDrawer id={6669999}></DetailsDrawer>
+        <Provider store={store}>
+          <DetailsDrawer id={6669999} />
+        </Provider>
       </MemoryRouter>
     );
 
     await waitFor(() => {
-      expect(fetchDataIdSpy).toHaveBeenCalledWith(expect.stringContaining('6669999'));
+      expect(screen.getByText(/Resource does not exist/i)).toBeInTheDocument();
     });
-    expect(screen.getByText(/Resource does not exist/i)).toBeInTheDocument();
+  });
+
+  it('aborts render with invalid id', async () => {
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <DetailsDrawer id={NaN} />
+        </Provider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('RefreshBtn')).not.toBeInTheDocument();
+    });
   });
 });

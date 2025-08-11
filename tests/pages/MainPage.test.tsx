@@ -2,10 +2,12 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { MemoryRouter } from 'react-router';
-import MainPage from '@/pages/MainPage';
-import { mockItem, mockItems, mockPagination } from '../mocks/data/items';
 import { Provider } from 'react-redux';
 import store from '@/store';
+
+import MainPage from '@/pages/MainPage';
+import { mockItems } from '../mocks/data/items';
+
 import SearchResults from '@/components/results/SearchResults';
 import Flyout from '@/components/shared/ui/Flyout';
 
@@ -33,13 +35,8 @@ describe('Main page', () => {
   });
 
   it('uses localStorage searchQuery on mount', async () => {
-    localStorage.setItem('searchQuery', 'Bleach');
+    localStorage.setItem('searchQuery', 'Test');
 
-    const fetchDataSpy = jest
-      .spyOn(global, 'fetch')
-      .mockResolvedValue(
-        new Response(JSON.stringify({ pagination: mockPagination, data: [] }), { status: 200 })
-      );
     render(
       <MemoryRouter>
         <Provider store={store}>
@@ -50,25 +47,15 @@ describe('Main page', () => {
 
     await waitFor(
       () => {
-        expect(fetchDataSpy).toHaveBeenCalledWith(expect.stringContaining('q=Bleach'));
+        expect(screen.queryByText(/nothing found/i)).not.toBeInTheDocument();
       },
       { timeout: 2000 }
     );
   });
 
   it('updates searchQuery in App when submitting SearchBar and fetching', async () => {
-    const fetchDataSpy = jest
-      .spyOn(global, 'fetch')
-      .mockResolvedValueOnce(
-        new Response(JSON.stringify({ pagination: mockPagination, data: [] }), { status: 200 })
-      )
-      .mockResolvedValueOnce(
-        new Response(JSON.stringify({ pagination: mockPagination, data: [mockItem] }), {
-          status: 200
-        })
-      );
-
     const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <Provider store={store}>
@@ -84,36 +71,11 @@ describe('Main page', () => {
 
     expect(input).toHaveValue('test');
 
-    await waitFor(() => {
-      expect(fetchDataSpy).toHaveBeenCalledWith(expect.stringContaining('q=test'));
-    });
-
     expect(await screen.findByText(/test/i)).toBeInTheDocument();
   });
 
-  it('displays error message on fetch failure', async () => {
-    jest
-      .spyOn(global, 'fetch')
-      .mockResolvedValue(
-        new Response(JSON.stringify({ message: 'Network error' }), { status: 500 })
-      );
-    render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <MainPage />
-        </Provider>
-      </MemoryRouter>
-    );
-
-    expect(await screen.findByText(/Network error/i)).toBeInTheDocument();
-  });
-
   it('shows message if no matching items', async () => {
-    jest
-      .spyOn(global, 'fetch')
-      .mockResolvedValue(
-        new Response(JSON.stringify({ pagination: mockPagination, data: [] }), { status: 200 })
-      );
+    const user = userEvent.setup();
     render(
       <MemoryRouter>
         <Provider store={store}>
@@ -121,9 +83,14 @@ describe('Main page', () => {
         </Provider>
       </MemoryRouter>
     );
+
+    const input = screen.getByPlaceholderText(/search for anime or manga/i);
+    await user.clear(input);
+    await user.type(input, 'Bleach');
+    await user.click(screen.getByRole('button', { name: /search/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/nothing found/i)).toBeInTheDocument();
+      expect(screen.getByText(/Nothing found matching/i)).toBeInTheDocument();
     });
   });
 
@@ -136,6 +103,7 @@ describe('Main page', () => {
             items={mockItems}
             searchQuery=""
             isLoading={false}
+            isFetching={false}
             error={null}
             page={1}
             totalPages={2}

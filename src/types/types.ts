@@ -4,6 +4,7 @@ export type ResultsProps = {
   items: CardItem[];
   searchQuery: string;
   isLoading: boolean;
+  isFetching: boolean;
   error: string | null;
 };
 
@@ -74,6 +75,8 @@ export type JikanApiResponseId = {
 export type DetailsProps = {
   card: CardItem;
   onClose: () => void;
+  onRefresh: () => void;
+  isRefreshing: boolean;
 };
 
 export type SelectedItem = {
