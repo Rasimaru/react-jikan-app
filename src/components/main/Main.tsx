@@ -1,24 +1,36 @@
-import { useEffect, type JSX } from 'react';
+'use client';
 
+import { useEffect, useMemo, type JSX } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import usePagination from '@/hooks/usePagination';
 import useUrlParams from '@/hooks/useUrlParams';
-
-import SearchResults from '@/components/results/SearchResults';
-import Search from '@/components/search/Search';
+import Search from './search/Search';
+import SearchResults from './results/SearchResults';
 import { useGetAnimeSearchQuery, useGetSeasonTopQuery } from '@/services/apiSlice';
 import { extractErrorMessage } from '@/utils/utils';
+import { JikanApiResponse } from '@/types/types';
 
-const MainPage = (): JSX.Element => {
+const Main = ({
+  initialData,
+  initialPage
+}: {
+  initialData: JikanApiResponse;
+  initialPage: number;
+}): JSX.Element => {
   const { getParam, setParams } = useUrlParams();
   const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
   const { currentPage, changePage } = usePagination();
+
   const {
     data: seasonData,
     error: seasonError,
     isLoading: isSeasonLoading,
     isFetching: isSeasonFetching
-  } = useGetSeasonTopQuery(currentPage, { skip: !!searchQuery.trim() });
+  } = useGetSeasonTopQuery(currentPage, {
+    skip: !!searchQuery.trim() || currentPage === initialPage,
+    refetchOnMountOrArgChange: false
+  });
+
   const {
     data: searchData,
     error: searchError,
@@ -29,10 +41,20 @@ const MainPage = (): JSX.Element => {
     { skip: !searchQuery.trim() }
   );
 
-  const data = searchQuery.trim() ? searchData : seasonData;
-  const error = searchQuery.trim() ? searchError : seasonError;
-  const isLoading = searchQuery.trim() ? isSearchLoading : isSeasonLoading;
-  const isFetching = searchQuery.trim() ? isSearchFetching : isSeasonFetching;
+  const data = useMemo(() => {
+    return searchQuery.trim() ? searchData : currentPage === initialPage ? initialData : seasonData;
+  }, [searchQuery, currentPage, initialPage, initialData, searchData, seasonData]);
+  const error = searchQuery.trim() ? searchError : currentPage === initialPage ? null : seasonError;
+  const isLoading = searchQuery.trim()
+    ? isSearchLoading
+    : currentPage === initialPage
+      ? false
+      : isSeasonLoading;
+  const isFetching = searchQuery.trim()
+    ? isSearchFetching
+    : currentPage === initialPage
+      ? false
+      : isSeasonFetching;
 
   useEffect(() => {
     if (!getParam('page')) {
@@ -64,4 +86,4 @@ const MainPage = (): JSX.Element => {
   );
 };
 
-export default MainPage;
+export default Main;

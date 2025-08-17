@@ -2,7 +2,7 @@ import { type JSX } from 'react';
 import { useSearchParams } from 'react-router';
 
 import type { PaginationProps, ResultsProps } from '@/types/types';
-import Spinner from '../shared/ui/Spinner';
+import Spinner from '../../shared/ui/Spinner';
 import CardList from './CardList';
 import Pagination from './Pagination';
 import DetailsDrawer from './DetailsDrawer';

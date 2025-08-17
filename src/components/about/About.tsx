@@ -1,7 +1,7 @@
 import { COURSE_LINK } from '@/types/constants';
 import { type JSX } from 'react';
 
-const AboutPage = (): JSX.Element => {
+const About = (): JSX.Element => {
   return (
     <section className="flex flex-col flex-grow items-center justify-center text-center gap-5">
       <h2 className="text-4xl font-bold">About</h2>
@@ -22,4 +22,4 @@ const AboutPage = (): JSX.Element => {
   );
 };
 
-export default AboutPage;
+export default About;

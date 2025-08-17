@@ -1,8 +1,8 @@
-import AboutPage from '@/pages/AboutPage';
 import { JSX } from 'react';
+import About from '@/components/about/About';
 
-const About = (): JSX.Element => {
-  return <AboutPage />;
+const AboutPage = (): JSX.Element => {
+  return <About />;
 };
 
-export default About;
+export default AboutPage;

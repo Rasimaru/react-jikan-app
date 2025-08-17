@@ -5,6 +5,7 @@ import ErrorBoundary from '@/components/shared/error/ErrorBoundary';
 import '@/styles/global.css';
 
 export const metadata: Metadata = {
+  icons: '/favicon.ico',
   title: 'Jikan Anime',
   description: 'Discover and explore anime with JikanApp'
 };

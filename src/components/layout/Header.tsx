@@ -1,4 +1,3 @@
-import logo from '@/assets/logo-fox.svg';
 import { type JSX } from 'react';
 import { BASE_PATH } from '@/types/constants';
 import { NavLink } from 'react-router';
@@ -16,7 +15,7 @@ const Header = (): JSX.Element => {
             `flex grow gap-2 title-font font-medium items-center justify-start hover:text-amber-300 duration-300 ${isActive ? 'text-amber-500' : ''}`
           }
         >
-          <img src={logo} alt="Jikan logo" width={50} height={50} />
+          <img src="/logo-fox.svg" alt="Jikan logo" width={50} height={50} />
           <h1 className="relative bottom-0.5 sm:text-3xl text-2xl">Jikan</h1>
         </NavLink>
         <NavLink
