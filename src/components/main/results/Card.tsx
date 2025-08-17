@@ -1,9 +1,13 @@
+'use client';
+
 import { type JSX } from 'react';
 import type { CardProps } from '@/types/types';
 import { LucideCheckCircle, LucideCircle, StarIcon } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router';
+
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addSelected, removeSelected } from '@/store/selectedSlice';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 const Card = (props: CardProps): JSX.Element => {
   const { mal_id, title, year, images, score, synopsis } = props.item;
@@ -13,7 +17,7 @@ const Card = (props: CardProps): JSX.Element => {
     state.selected.selectedItems.some((item) => item.id === mal_id.toString())
   );
 
-  const [searchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   params.set('details', mal_id.toString());
 
@@ -34,7 +38,7 @@ const Card = (props: CardProps): JSX.Element => {
 
   return (
     <Link
-      to={`?${params.toString()}`}
+      href={`?${params.toString()}`}
       aria-label={`View details for ${title}`}
       role="listitem"
       className="hover:scale-102 duration-300 rounded-xl max-[450]:max-w-[300px]"

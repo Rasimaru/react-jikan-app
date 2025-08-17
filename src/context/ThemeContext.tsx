@@ -1,3 +1,5 @@
+'use client';
+
 import useLocalStorage from '@/hooks/useLocalStorage';
 import type { Theme, ThemeContextType } from '@/types/types';
 import { createContext, useEffect, type ReactNode } from 'react';

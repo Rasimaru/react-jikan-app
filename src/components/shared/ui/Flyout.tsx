@@ -1,3 +1,5 @@
+'use client';
+
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { clearAll } from '@/store/selectedSlice';
 import { BrushCleaning, Download, PanelLeftOpen, PanelRightOpen } from 'lucide-react';

@@ -1,9 +1,9 @@
+'use client';
+
 import { useEffect, useState, type JSX } from 'react';
-
 import useUrlParams from '@/hooks/useUrlParams';
-
 import CardDetails from './CardDetails';
-import Spinner from '../shared/ui/Spinner';
+import Spinner from '../../shared/ui/Spinner';
 import { useGetAnimeByIdQuery, useRefreshAnimeByIdMutation } from '@/services/apiSlice';
 import { extractErrorMessage } from '@/utils/utils';
 
