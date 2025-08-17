@@ -1,13 +1,14 @@
 'use client';
 
 import { type JSX } from 'react';
-import type { CardProps } from '@/types/types';
-import { LucideCheckCircle, LucideCircle, StarIcon } from 'lucide-react';
-
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { addSelected, removeSelected } from '@/store/selectedSlice';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
+
+import type { CardProps } from '@/types/types';
+import { LucideCheckCircle, LucideCircle, StarIcon } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { addSelected, removeSelected } from '@/store/selectedSlice';
 
 const Card = (props: CardProps): JSX.Element => {
   const { mal_id, title, year, images, score, synopsis } = props.item;
@@ -45,7 +46,7 @@ const Card = (props: CardProps): JSX.Element => {
     >
       <div className="flex flex-col border-1 rounded-xl overflow-clip relative h-full">
         <div className="aspect-[3/4] relative">
-          <img
+          <Image
             alt={title}
             loading="lazy"
             src={images.webp.large_image_url}

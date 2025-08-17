@@ -1,5 +1,6 @@
-import type { DetailsProps } from '@/types/types';
 import { type JSX } from 'react';
+import Image from 'next/image';
+import type { DetailsProps } from '@/types/types';
 
 const CardDetails = (props: DetailsProps): JSX.Element => {
   const { card, onClose, onRefresh, isRefreshing } = props;
@@ -21,7 +22,7 @@ const CardDetails = (props: DetailsProps): JSX.Element => {
         </button>
         <div className="flex min-[450px]:flex-row flex-col gap-5 justify-center w-full h-full items-center">
           <div className="basis-1/3 aspect-[3/4] max-[450px]:w-full min-[450px]:min-h-[250px] relative">
-            <img
+            <Image
               alt={card?.title}
               loading="lazy"
               src={card?.images?.webp?.large_image_url}

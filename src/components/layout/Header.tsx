@@ -1,6 +1,7 @@
 import { type JSX } from 'react';
-import ThemeSwitcher from '../shared/ui/ThemeSwitcher';
+import Image from 'next/image';
 import Link from 'next/link';
+import ThemeSwitcher from '../shared/ui/ThemeSwitcher';
 import { withBasePath } from '@/utils/utils';
 
 const Header = (): JSX.Element => {
@@ -12,7 +13,7 @@ const Header = (): JSX.Element => {
           href="/"
           className="flex grow gap-2 title-font font-medium items-center justify-start hover:text-amber-300 duration-300"
         >
-          <img src={withBasePath('/logo-fox.svg')} alt="Jikan logo" width={50} height={50} />
+          <Image src={withBasePath('/logo-fox.svg')} alt="Jikan logo" width={50} height={50} />
           <h1 className="relative bottom-0.5 sm:text-3xl text-2xl">Jikan</h1>
         </Link>
         <Link
