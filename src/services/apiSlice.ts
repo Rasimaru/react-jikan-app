@@ -34,13 +34,17 @@ const apiSlice = createApi({
     }),
 
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    refreshAnime: builder.mutation<undefined, void>({
-      queryFn: () => ({ data: undefined }),
+    refreshAnime: builder.mutation<null, void>({
+      queryFn: async () => {
+        return { data: null };
+      },
       invalidatesTags: ['Anime']
     }),
 
-    refreshAnimeById: builder.mutation<undefined, number>({
-      queryFn: () => ({ data: undefined }),
+    refreshAnimeById: builder.mutation<null, number>({
+      queryFn: async () => {
+        return { data: null };
+      },
       invalidatesTags: (_result, _error, id) => [{ type: 'Anime', id }]
     })
   }),
