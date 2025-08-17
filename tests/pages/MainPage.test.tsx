@@ -1,17 +1,19 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-import { MemoryRouter } from 'react-router';
+import MainPage from '@/app/[locale]/page';
 import { Provider } from 'react-redux';
 import store from '@/store';
-
-import MainPage from '@/pages/MainPage';
-import { mockItems } from '../mocks/data/items';
-
-import SearchResults from '@/components/results/SearchResults';
+import { server } from 'tests/mocks/server';
+import { http } from 'msw';
+import SearchResults from '@/components/main/results/SearchResults';
+import { mockItems } from 'tests/mocks/data/items';
 import Flyout from '@/components/shared/ui/Flyout';
 
 describe('Main page', () => {
+  const renderWithProviders = (ui: React.ReactElement) => {
+    return render(<Provider store={store}>{ui}</Provider>);
+  };
+
   beforeEach(() => {
     localStorage.clear();
     jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -19,17 +21,10 @@ describe('Main page', () => {
 
   afterEach(() => {
     jest.restoreAllMocks();
-    jest.clearAllMocks();
   });
 
   it('renders on first mount', () => {
-    render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <MainPage />
-        </Provider>
-      </MemoryRouter>
-    );
+    renderWithProviders(<MainPage />);
 
     expect(screen.getByTestId(/spinner/i)).toBeInTheDocument();
   });
@@ -37,13 +32,8 @@ describe('Main page', () => {
   it('uses localStorage searchQuery on mount', async () => {
     localStorage.setItem('searchQuery', 'Test');
 
-    render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <MainPage />
-        </Provider>
-      </MemoryRouter>
-    );
+    const page = await MainPage();
+    render(<Provider store={store}>{page}</Provider>);
 
     await waitFor(
       () => {
@@ -55,14 +45,11 @@ describe('Main page', () => {
 
   it('updates searchQuery in App when submitting SearchBar and fetching', async () => {
     const user = userEvent.setup();
+    const router = { push: jest.fn() };
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    jest.spyOn(require('next/navigation'), 'useRouter').mockImplementation(() => router);
 
-    render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <MainPage />
-        </Provider>
-      </MemoryRouter>
-    );
+    renderWithProviders(<MainPage />);
 
     const input = screen.getByPlaceholderText(/search for anime or manga/i);
     await user.clear(input);
@@ -70,19 +57,25 @@ describe('Main page', () => {
     await user.click(screen.getByRole('button', { name: /search/i }));
 
     expect(input).toHaveValue('test');
-
+    expect(router.push).toHaveBeenCalledWith('/?q=test');
     expect(await screen.findByText(/test/i)).toBeInTheDocument();
+  });
+
+  it('displays error message on fetch failure', async () => {
+    // Mock fetch to return error
+    server.use(
+      http.get('https://api.jikan.moe/v4/top/anime', () => {
+        return new Response(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
+      })
+    );
+
+    renderWithProviders(<MainPage />);
+    expect(await screen.findByText(/error/i)).toBeInTheDocument();
   });
 
   it('shows message if no matching items', async () => {
     const user = userEvent.setup();
-    render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <MainPage />
-        </Provider>
-      </MemoryRouter>
-    );
+    renderWithProviders(<MainPage />);
 
     const input = screen.getByPlaceholderText(/search for anime or manga/i);
     await user.clear(input);
@@ -90,39 +83,38 @@ describe('Main page', () => {
     await user.click(screen.getByRole('button', { name: /search/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/Nothing found matching/i)).toBeInTheDocument();
+      expect(screen.getByText(/nothing found/i)).toBeInTheDocument();
     });
   });
 
   it('renders Flyout component with checked item', async () => {
-    const onPageChange = jest.fn();
+    const user = userEvent.setup();
+
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <SearchResults
-            items={mockItems}
-            searchQuery=""
-            isLoading={false}
-            isFetching={false}
-            error={null}
-            page={1}
-            totalPages={2}
-            onPageChange={onPageChange}
-          />
-          <Flyout></Flyout>
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <SearchResults
+          items={mockItems}
+          searchQuery=""
+          isLoading={false}
+          isFetching={false}
+          error={null}
+          page={1}
+          totalPages={2}
+          onPageChange={jest.fn()}
+        />
+        <Flyout />
+      </Provider>
     );
 
     expect(screen.queryByText(/1 item selected/i)).not.toBeInTheDocument();
     expect(screen.queryByTestId('extender')).not.toBeInTheDocument();
 
     const checkbox = screen.getAllByRole('checkbox')[0];
-    await userEvent.click(checkbox);
+    await user.click(checkbox);
 
     const extender = screen.getByTestId('extender');
     expect(extender).toBeInTheDocument();
-    await userEvent.click(extender);
+    await user.click(extender);
 
     const remover = screen.getByTestId('remover');
     expect(remover).toBeInTheDocument();
@@ -130,13 +122,13 @@ describe('Main page', () => {
     expect(downloader).toBeInTheDocument();
     const shortener = screen.getByTestId('shortener');
     expect(shortener).toBeInTheDocument();
-    await userEvent.click(shortener);
+    await user.click(shortener);
 
-    await userEvent.click(remover);
+    await user.click(remover);
     expect(downloader).not.toBeInTheDocument();
 
-    await userEvent.click(checkbox);
-    await userEvent.click(checkbox);
+    await user.click(checkbox);
+    await user.click(checkbox);
     expect(checkbox).not.toBeChecked();
   });
 });

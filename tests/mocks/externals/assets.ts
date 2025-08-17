@@ -1,1 +1,1 @@
-jest.mock('@/assets/logo-fox.svg', () => 'mock-logo.svg');
+jest.mock('./logo-fox.svg', () => 'mock-logo.svg');

@@ -1,19 +1,54 @@
-import Card from '@/components/results/Card';
 import { render, screen } from '@testing-library/react';
 import { mockItem } from '../../mocks/data/items';
-import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import store from '@/store';
 import userEvent from '@testing-library/user-event';
+import Card from '@/components/main/results/Card';
+import React from 'react';
+
+jest.mock('next/image', () => {
+  const MockImage = ({ src, alt, ...props }: { src: string; alt: string }) => {
+    const fixedSrc = src.startsWith('/') || src.startsWith('http') ? src : `/${src}`;
+    return <img src={fixedSrc} alt={alt} {...props} />;
+  };
+  MockImage.displayName = 'MockImage';
+  return MockImage;
+});
+
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  NextIntlProvider: ({ children }: { children: React.ReactNode }) => children
+}));
+
+jest.mock('next-intl/navigation', () => ({
+  createNavigation: () => ({
+    Link: ({ children, href }: { children: React.ReactNode; href: string }) => (
+      <a href={href}>{children}</a>
+    )
+  }),
+  useRouter: () => ({ push: jest.fn(), replace: jest.fn(), prefetch: jest.fn() }),
+  usePathname: () => '/',
+  useParams: () => ({}),
+  useSearchParams: () => new URLSearchParams()
+}));
+
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn().mockReturnValue({
+    pathname: '/',
+    push: jest.fn(),
+    replace: jest.fn(),
+    query: {},
+    asPath: '/'
+  }),
+  useSearchParams: () => new URLSearchParams()
+}));
 
 describe('Card component', () => {
   it('renders title, year, image alt and score from props', () => {
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <Card item={mockItem} />
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <Card item={mockItem} />
+      </Provider>
     );
 
     expect(screen.getByAltText(/test/i)).toBeInTheDocument();
@@ -24,11 +59,9 @@ describe('Card component', () => {
 
   it('renders "TBD" if year is null', () => {
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <Card item={{ ...mockItem, year: null }} />
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <Card item={{ ...mockItem, year: null }} />
+      </Provider>
     );
 
     expect(screen.getByText(/TBD/i)).toBeInTheDocument();
@@ -36,17 +69,15 @@ describe('Card component', () => {
 
   it('changes checked state on click', async () => {
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <Card item={mockItem} />
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <Card item={mockItem} />
+      </Provider>
     );
 
     const checkbox = screen.getByRole('checkbox');
     await userEvent.click(checkbox);
 
-    expect(screen.getByText('Selected')).toBeInTheDocument();
+    expect(screen.getByText(/selected/i)).toBeInTheDocument();
     expect(screen.getByTestId(/CheckedIcon/i)).toBeInTheDocument();
   });
 });
