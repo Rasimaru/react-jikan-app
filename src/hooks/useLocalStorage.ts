@@ -3,21 +3,6 @@
 import { useEffect, useState } from 'react';
 
 const useLocalStorage = <T>(key: string, initialValue: T) => {
-  // const getValue = (key: string): T => {
-  //   if (typeof window === 'undefined') {
-  //     return initialValue; // или дефолтное значение
-  //   }
-  //   try {
-  //     const storedValue = localStorage.getItem(key);
-  //     if (storedValue !== null) {
-  //       return JSON.parse(storedValue) as T;
-  //     }
-  //   } catch (error) {
-  //     console.error(`Can't read value from local storage ${key}`, error);
-  //   }
-  //   return initialValue;
-  // };
-
   const [value, setValue] = useState<T>(initialValue);
 
   useEffect(() => {

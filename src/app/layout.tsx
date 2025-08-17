@@ -1,22 +1,12 @@
-import { Metadata } from 'next';
-import Providers from './providers';
-import Layout from '@/components/layout/Layout';
+import { ReactNode } from 'react';
 import '@/styles/global.css';
-import { withBasePath } from '@/utils/utils';
+import Providers from './providers';
 
-export const metadata: Metadata = {
-  icons: withBasePath('/favicon.ico'),
-  title: 'Jikan Anime',
-  description: 'Discover and explore anime with JikanApp'
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <Layout>{children}</Layout>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

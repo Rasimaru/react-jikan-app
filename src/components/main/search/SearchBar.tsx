@@ -4,6 +4,7 @@ import React, { useEffect, useState, type JSX } from 'react';
 import type { SearchProps } from '@/types/types';
 import { Search } from 'lucide-react';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { useTranslations } from 'next-intl';
 
 const SearchBar = (props: SearchProps): JSX.Element => {
   const { searchQuery, onSearch } = props;
@@ -28,6 +29,8 @@ const SearchBar = (props: SearchProps): JSX.Element => {
     onSearch(trimmedQuery);
   };
 
+  const t = useTranslations('Search');
+
   return (
     <form
       autoComplete="none"
@@ -42,7 +45,7 @@ const SearchBar = (props: SearchProps): JSX.Element => {
           aria-label="Search input"
           value={localQuery}
           onChange={handleChange}
-          placeholder="Search for anime or manga..."
+          placeholder={t('placeholder')}
           className="flex grow rounded-md border bg-background px-3 py-2 text-base md:text-lg pl-10 h-12 rounded-r-none max-[380px]:pr-0 placeholder:text-gray-400"
         ></input>
       </label>
@@ -50,7 +53,7 @@ const SearchBar = (props: SearchProps): JSX.Element => {
         type="submit"
         className="inline-flex items-center bg-amber-500 text-black py-1 px-3 hover:bg-amber-300 hover:cursor-pointer rounded-r text-base duration-300 font-semibold"
       >
-        Search
+        {t('button')}
       </button>
     </form>
   );

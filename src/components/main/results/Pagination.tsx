@@ -1,4 +1,5 @@
 import type { PaginationProps } from '@/types/types';
+import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
 
 const Pagination = (props: PaginationProps): JSX.Element => {
@@ -10,6 +11,8 @@ const Pagination = (props: PaginationProps): JSX.Element => {
     }
   };
 
+  const t = useTranslations('Pagination');
+
   return (
     <div className="flex justify-center items-center gap-5 text-lg">
       <button
@@ -18,7 +21,7 @@ const Pagination = (props: PaginationProps): JSX.Element => {
         onClick={() => handlePageChange(page - 1)}
         className="inline-flex items-center bg-amber-500 text-black border-0 py-1.5 px-5 focus:outline-none hover:bg-amber-300 hover:cursor-pointer rounded font-semibold duration-300 disabled:bg-gray-100 disabled:cursor-default"
       >
-        Prev
+        {t('buttonPrev')}
       </button>
 
       <span>
@@ -31,7 +34,7 @@ const Pagination = (props: PaginationProps): JSX.Element => {
         onClick={() => handlePageChange(page + 1)}
         className="inline-flex items-center bg-amber-500 text-black border-0 py-1.5 px-5 focus:outline-none hover:bg-amber-300 hover:cursor-pointer rounded font-semibold duration-300 disabled:bg-gray-100 disabled:cursor-default"
       >
-        Next
+        {t('buttonNext')}
       </button>
     </div>
   );

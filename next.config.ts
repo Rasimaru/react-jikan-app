@@ -1,7 +1,7 @@
 import { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
-  output: 'export',
   distDir: './dist',
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   images: {
@@ -11,8 +11,10 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.myanimelist.net',
         pathname: '/images/**'
       }
-    ]
+    ],
+    unoptimized: true
   }
 };
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin();
+export default withNextIntl(nextConfig);

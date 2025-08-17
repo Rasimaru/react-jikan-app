@@ -1,9 +1,13 @@
 import { type JSX } from 'react';
 import Image from 'next/image';
 import type { DetailsProps } from '@/types/types';
+import { useTranslations } from 'next-intl';
 
 const CardDetails = (props: DetailsProps): JSX.Element => {
   const { card, onClose, onRefresh, isRefreshing } = props;
+
+  const t = useTranslations('Buttons');
+
   return (
     <>
       <div className="flex flex-col gap-5 relative">
@@ -11,20 +15,21 @@ const CardDetails = (props: DetailsProps): JSX.Element => {
           onClick={onClose}
           className="absolute inline-flex self-end bg-amber-500 text-black border-0 py-1.5 px-3 focus:outline-none hover:bg-amber-300 hover:cursor-pointer rounded text-base font-semibold duration-300 z-10"
         >
-          Close
+          {t('close')}
         </button>
         <button
           disabled={isRefreshing}
           onClick={onRefresh}
           className="absolute left-0 inline-flex self-end bg-amber-500 text-black border-0 py-1.5 px-3 focus:outline-none hover:bg-amber-300 hover:cursor-pointer rounded text-base font-semibold duration-300 z-10"
         >
-          Refresh
+          {t('refresh')}
         </button>
         <div className="flex min-[450px]:flex-row flex-col gap-5 justify-center w-full h-full items-center">
           <div className="basis-1/3 aspect-[3/4] max-[450px]:w-full min-[450px]:min-h-[250px] relative">
             <Image
               alt={card?.title}
               loading="lazy"
+              layout="fill"
               src={card?.images?.webp?.large_image_url}
               className="absolute w-full h-full object-cover"
             />

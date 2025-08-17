@@ -1,10 +1,13 @@
 import { type JSX } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import ThemeSwitcher from '../shared/ui/ThemeSwitcher';
 import { withBasePath } from '@/utils/utils';
+import LocaleSwitcher from '../shared/ui/LocaleSwitcher';
+import { useTranslations } from 'next-intl';
 
 const Header = (): JSX.Element => {
+  const t = useTranslations('Nav');
   return (
     <header className="container text-black dark:text-gray-100 body-font w-full">
       <nav className="mx-auto flex flex-wrap py-5 flex-col min-[20rem]:flex-row items-center justify-start text-lg gap-5">
@@ -21,9 +24,10 @@ const Header = (): JSX.Element => {
           aria-label="Go to about page"
           className="hover:text-amber-300 duration-300"
         >
-          About
+          {t('about')}
         </Link>
         <ThemeSwitcher />
+        <LocaleSwitcher />
       </nav>
     </header>
   );

@@ -2,13 +2,15 @@
 
 import { type JSX } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+
 import Image from 'next/image';
 
 import type { CardProps } from '@/types/types';
 import { LucideCheckCircle, LucideCircle, StarIcon } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { addSelected, removeSelected } from '@/store/selectedSlice';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 const Card = (props: CardProps): JSX.Element => {
   const { mal_id, title, year, images, score, synopsis } = props.item;
@@ -37,6 +39,8 @@ const Card = (props: CardProps): JSX.Element => {
     }
   };
 
+  const t = useTranslations('Checkbox');
+
   return (
     <Link
       href={`?${params.toString()}`}
@@ -49,6 +53,7 @@ const Card = (props: CardProps): JSX.Element => {
           <Image
             alt={title}
             loading="lazy"
+            fill
             src={images.webp.large_image_url}
             className="absolute w-full h-full object-cover"
           />
@@ -73,7 +78,7 @@ const Card = (props: CardProps): JSX.Element => {
           >
             <input type="checkbox" hidden checked={isSelected} onChange={handleCheckboxChange} />
             {isSelected ? <LucideCheckCircle data-testid={'CheckedIcon'} /> : <LucideCircle />}
-            {isSelected ? 'Selected' : 'Select'}
+            {isSelected ? t('selected') : t('select')}
           </label>
         </div>
       </div>

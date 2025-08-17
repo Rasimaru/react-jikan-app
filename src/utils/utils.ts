@@ -1,3 +1,5 @@
+import { routing } from '@/i18n/routing';
+
 export const extractErrorMessage = (error: unknown): string | undefined => {
   if (!error) return;
 
@@ -13,3 +15,7 @@ export const withBasePath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PA
 
 export const formatPathname = (pathname: string) =>
   pathname.endsWith('/') ? pathname : `${pathname}/`;
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
