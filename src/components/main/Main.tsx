@@ -8,15 +8,9 @@ import Search from './search/Search';
 import SearchResults from './results/SearchResults';
 import { useGetAnimeSearchQuery, useGetSeasonTopQuery } from '@/store/api/apiSlice';
 import { extractErrorMessage } from '@/utils/utils';
-import { JikanApiResponse } from '@/types/types';
+import { MainProps } from '@/types/types';
 
-const Main = ({
-  initialData,
-  initialPage
-}: {
-  initialData: JikanApiResponse;
-  initialPage: number;
-}): JSX.Element => {
+const Main = ({ initialData, initialPage }: MainProps): JSX.Element => {
   const { getParam, setParams } = useUrlParams();
   const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
   const { currentPage, changePage } = usePagination();

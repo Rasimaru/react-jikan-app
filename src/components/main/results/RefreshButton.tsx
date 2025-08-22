@@ -1,10 +1,6 @@
 import { RefreshCcw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-
-type RefreshButtonProps = {
-  onRefresh: () => void;
-  isRefreshing: boolean;
-};
+import { RefreshButtonProps } from '@/types/types';
 
 const RefreshButton = (props: RefreshButtonProps) => {
   const { onRefresh, isRefreshing } = props;
