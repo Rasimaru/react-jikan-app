@@ -1,12 +1,13 @@
 import { ReactNode } from 'react';
-import { Metadata } from 'next';
-import Providers from './providers';
-import Layout from '@/components/layout/Layout';
-import '@/styles/global.css';
-import { withBasePath } from '@/utils/utils';
-import { routing } from '@/i18n/routing';
-import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
+import { hasLocale, Messages } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
+import { routing } from '@/i18n/routing';
+import Providers from '@/providers/Providers';
+import Layout from '@/components/layout/Layout';
+import { withBasePath, generateStaticParams } from '@/utils/utils';
+import { Metadata } from 'next';
+export { generateStaticParams };
 
 export const metadata: Metadata = {
   icons: withBasePath('/favicon.ico'),
@@ -14,19 +15,20 @@ export const metadata: Metadata = {
   description: 'Discover and explore anime with JikanApp'
 };
 
-type LayoutProps = {
+export type LayoutProps = {
   children: ReactNode;
   params: { locale: 'en' | 'by' };
 };
 
 export default async function LocaleLayout({ children, params }: LayoutProps) {
-  const { locale } = await params;
+  const { locale } = await Promise.resolve(params);
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
-  const messages = (await import(`@/locales/${locale}.json`)).default;
+  setRequestLocale(locale);
+  const messages: Messages = (await import(`../../../messages/${locale}.json`)).default;
 
   return (
     <Providers locale={locale} messages={messages}>
