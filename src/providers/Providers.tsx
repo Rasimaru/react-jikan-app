@@ -3,9 +3,10 @@
 import { Provider } from 'react-redux';
 import { ReactNode } from 'react';
 import store from '@/store';
-import ThemeProvider from '@/context/ThemeContext';
+
 import ErrorBoundary from '@/components/shared/error/ErrorBoundary';
 import { NextIntlClientProvider } from 'next-intl';
+import ThemeProvider from '@/context/ThemeProvider';
 
 type ProviderProps = {
   children: ReactNode;
