@@ -1,13 +1,19 @@
 'use client';
 
-import { useState, type JSX } from 'react';
+import { useEffect, useState, type JSX } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { useLocale } from 'next-intl';
 
 const LocaleSwitcher = (): JSX.Element => {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  const locale = useLocale();
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
 
   const handleChange = (locale: string) => {
     const newPath = pathname.replace(/^\/(en|by)/, `/${locale}`);

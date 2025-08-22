@@ -31,8 +31,7 @@ const Flyout = (): JSX.Element | null => {
   return (
     <div className="fixed left-5 bottom-5 z-50 bg-white dark:bg-neutral-800 border rounded-xl shadow-lg flex items-center overflow-hidden transition-all duration-300">
       <div className="flex items-center px-3 border-r min-h-11 text-sm font-medium whitespace-nowrap">
-        {selectedItems.length} {selectedItems.length > 1 ? `${t('elems')}` : t('elem')}{' '}
-        {t('selected')}
+        {t('elem', { count: selectedItems.length })}
       </div>
       {!open && (
         <button

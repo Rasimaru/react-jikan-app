@@ -15,7 +15,8 @@
 
   "NotFound": {
     "heading": "404 – Page Not Found",
-    "description": "The page you are looking for does not exist."
+    "description": "The page you are looking for does not exist.",
+    "button": "To main"
   },
 
   "Search": {
@@ -41,8 +42,6 @@
   },
 
   "Flyout": {
-    "elem": "item",
-    "elems": "items",
-    "selected": "selected"
+    "elem": "{count, plural, one {# item selected} other {# items selected}}"
   }
 }
