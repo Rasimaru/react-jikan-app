@@ -2,15 +2,13 @@
 
 import { type JSX } from 'react';
 import { useSearchParams } from 'next/navigation';
-
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
-
 import type { CardProps } from '@/types/types';
 import { LucideCheckCircle, LucideCircle, StarIcon } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { addSelected, removeSelected } from '@/store/selectedSlice';
-import { Link } from '@/i18n/navigation';
-import { useTranslations } from 'next-intl';
+import { addSelected, removeSelected } from '@/store/slices/selectedSlice';
 
 const Card = (props: CardProps): JSX.Element => {
   const { mal_id, title, year, images, score, synopsis } = props.item;

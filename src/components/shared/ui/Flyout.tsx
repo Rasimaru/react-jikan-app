@@ -1,12 +1,12 @@
 'use client';
 
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { clearAll } from '@/store/selectedSlice';
-import { BrushCleaning, Download, PanelLeftOpen, PanelRightOpen } from 'lucide-react';
 import { useState, type JSX } from 'react';
-import { saveAs } from 'file-saver';
-import downloadCsvServer from '@/server/downloadCsvServer';
 import { useTranslations } from 'next-intl';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { clearAll } from '@/store/slices/selectedSlice';
+import { BrushCleaning, Download, PanelLeftOpen, PanelRightOpen } from 'lucide-react';
+import { saveAs } from 'file-saver';
+import downloadCsvServer from '@/lib/server/downloadCsvServer';
 
 const Flyout = (): JSX.Element | null => {
   const dispatch = useAppDispatch();

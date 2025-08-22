@@ -6,7 +6,7 @@ import usePagination from '@/hooks/usePagination';
 import useUrlParams from '@/hooks/useUrlParams';
 import Search from './search/Search';
 import SearchResults from './results/SearchResults';
-import { useGetAnimeSearchQuery, useGetSeasonTopQuery } from '@/services/apiSlice';
+import { useGetAnimeSearchQuery, useGetSeasonTopQuery } from '@/store/api/apiSlice';
 import { extractErrorMessage } from '@/utils/utils';
 import { JikanApiResponse } from '@/types/types';
 

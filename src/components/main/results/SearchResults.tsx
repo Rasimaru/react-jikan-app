@@ -1,14 +1,14 @@
 'use client';
 
 import { type JSX } from 'react';
+import { useSearchParams } from 'next/navigation';
 import type { PaginationProps, ResultsProps } from '@/types/types';
 import Spinner from '../../shared/ui/Spinner';
 import CardList from './CardList';
 import Pagination from './Pagination';
 import DetailsDrawer from './DetailsDrawer';
 import RefreshButton from './RefreshButton';
-import { useRefreshAnimeMutation } from '@/services/apiSlice';
-import { useSearchParams } from 'next/navigation';
+import { useRefreshAnimeMutation } from '@/store/api/apiSlice';
 
 const SearchResults = (props: ResultsProps & PaginationProps): JSX.Element => {
   const { items, isLoading, isFetching, error, searchQuery, page, totalPages, onPageChange } =
