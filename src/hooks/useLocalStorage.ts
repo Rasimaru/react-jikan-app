@@ -1,19 +1,24 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 const useLocalStorage = <T>(key: string, initialValue: T) => {
-  const getValue = (key: string): T => {
+  const [value, setValue] = useState<T>(initialValue);
+
+  useEffect(() => {
     try {
       const storedValue = localStorage.getItem(key);
       if (storedValue !== null) {
-        return JSON.parse(storedValue) as T;
+        try {
+          setValue(JSON.parse(storedValue) as T);
+        } catch {
+          setValue(storedValue as unknown as T);
+        }
       }
     } catch (error) {
       console.error(`Can't read value from local storage ${key}`, error);
     }
-    return initialValue;
-  };
-
-  const [value, setValue] = useState(() => getValue(key));
+  }, [key]);
 
   useEffect(() => {
     try {

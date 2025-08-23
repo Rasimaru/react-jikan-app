@@ -1,0 +1,47 @@
+{
+  "Nav": {
+    "about": "About"
+  },
+
+  "About": {
+    "heading": "About",
+    "description": "A search platform built with React and powered by the Jikan API.",
+    "info": {
+      "start": "This project is part of the",
+      "link": "React 2025Q3 course",
+      "end": "and will be gradually expanded in future tasks"
+    }
+  },
+
+  "NotFound": {
+    "heading": "404 – Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "button": "To main"
+  },
+
+  "Search": {
+    "heading": "Discover Your Next Adventure",
+    "description": "Track, discover, and discuss your favorite anime and manga all in one place.",
+    "placeholder": "Search for anime",
+    "button": "Search"
+  },
+
+  "Buttons": {
+    "refresh": "Refresh",
+    "close": "Close"
+  },
+
+  "Checkbox": {
+    "select": "Select",
+    "selected": "Selected"
+  },
+
+  "Pagination": {
+    "buttonPrev": "Prev",
+    "buttonNext": "Next"
+  },
+
+  "Flyout": {
+    "elem": "{count, plural, one {# item selected} other {# items selected}}"
+  }
+}

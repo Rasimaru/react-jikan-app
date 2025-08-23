@@ -1,34 +1,33 @@
-import logo from '@/assets/logo-fox.svg';
 import { type JSX } from 'react';
-import { BASE_PATH } from '@/types/constants';
-import { NavLink } from 'react-router';
+import Image from 'next/image';
+import { Link } from '@/i18n/navigation';
 import ThemeSwitcher from '../shared/ui/ThemeSwitcher';
+import { withBasePath } from '@/utils/utils';
+import LocaleSwitcher from '../shared/ui/LocaleSwitcher';
+import { useTranslations } from 'next-intl';
 
 const Header = (): JSX.Element => {
+  const t = useTranslations('Nav');
   return (
     <header className="container text-black dark:text-gray-100 body-font w-full">
       <nav className="mx-auto flex flex-wrap py-5 flex-col min-[20rem]:flex-row items-center justify-start text-lg gap-5">
-        <NavLink
+        <Link
           aria-label="Go to home page"
-          to={BASE_PATH}
-          end
-          className={({ isActive }) =>
-            `flex grow gap-2 title-font font-medium items-center justify-start hover:text-amber-300 duration-300 ${isActive ? 'text-amber-500' : ''}`
-          }
+          href="/"
+          className="flex grow gap-2 title-font font-medium items-center justify-start hover:text-amber-300 duration-300"
         >
-          <img src={logo} alt="Jikan logo" width={50} height={50} />
+          <Image src={withBasePath('/logo-fox.svg')} alt="Jikan logo" width={50} height={50} />
           <h1 className="relative bottom-0.5 sm:text-3xl text-2xl">Jikan</h1>
-        </NavLink>
-        <NavLink
-          to="about"
+        </Link>
+        <Link
+          href="/about"
           aria-label="Go to about page"
-          className={({ isActive }) =>
-            `hover:text-amber-300 duration-300 ${isActive ? 'text-amber-500' : ''}`
-          }
+          className="hover:text-amber-300 duration-300"
         >
-          About
-        </NavLink>
+          {t('about')}
+        </Link>
         <ThemeSwitcher />
+        <LocaleSwitcher />
       </nav>
     </header>
   );

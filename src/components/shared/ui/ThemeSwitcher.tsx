@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, type JSX } from 'react';
 import { Laptop2, Moon, Sun } from 'lucide-react';
 import type { Theme, ThemeOption } from '@/types/types';

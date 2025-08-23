@@ -1,6 +1,7 @@
 import { type JSX } from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import type { FallbackProps } from '@/types/types';
+import { withBasePath } from '@/utils/utils';
 
 const Fallback = (props: FallbackProps): JSX.Element => {
   const { onReset } = props;
@@ -11,7 +12,12 @@ const Fallback = (props: FallbackProps): JSX.Element => {
       aria-describedby="fallback-description"
       className="container text-center grow flex flex-col justify-center items-center gap-4 h-full"
     >
-      <DotLottieReact src="./Fox-fall.lottie" loop autoplay className="w-50 h-50"></DotLottieReact>
+      <DotLottieReact
+        src={withBasePath('/Fox-fall.lottie')}
+        loop
+        autoplay
+        className="w-50 h-50"
+      ></DotLottieReact>
       <h2 id="fallback-title" className="text-4xl">
         Oops! Sorry for the inconvenience!
       </h2>

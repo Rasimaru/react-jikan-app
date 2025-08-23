@@ -8,3 +8,8 @@ export const extractErrorMessage = (error: unknown): string | undefined => {
   }
   return 'Unknown Error';
 };
+
+export const withBasePath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH || ''}${path}`;
+
+export const formatPathname = (pathname: string) =>
+  pathname.endsWith('/') ? pathname : `${pathname}/`;

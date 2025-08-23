@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import type { JSX, ReactNode } from 'react';
 
 export type ResultsProps = {
   items: CardItem[];
@@ -47,8 +47,8 @@ export type SearchProps = {
 };
 
 export type BoundaryProps = {
-  children: React.ReactNode;
-  fallback?: React.ReactNode;
+  children: ReactNode;
+  fallback?: ReactNode;
 };
 
 export type BoundaryState = {
@@ -57,6 +57,11 @@ export type BoundaryState = {
 
 export type FallbackProps = {
   onReset: () => void;
+};
+
+export type LocaleLayoutProps = {
+  children: ReactNode;
+  params: Promise<{ locale: 'en' | 'by' }>;
 };
 
 export type JikanApiResponse = {
@@ -102,4 +107,25 @@ export type ThemeOption = {
   value: Theme;
   label: string;
   icon: JSX.Element;
+};
+
+export type RefreshButtonProps = {
+  onRefresh: () => void;
+  isRefreshing: boolean;
+};
+
+export type MainProps = {
+  initialData: JikanApiResponse;
+  initialPage: number;
+  initialQuery: string;
+};
+
+export type ProviderProps = {
+  children: ReactNode;
+  locale: string;
+  messages: Record<string, string>;
+};
+
+export type MainPageProps = {
+  searchParams: Promise<{ q?: string; page?: string }>;
 };

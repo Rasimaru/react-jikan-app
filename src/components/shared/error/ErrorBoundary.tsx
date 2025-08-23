@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import type { BoundaryProps, BoundaryState } from '@/types/types';
 import Fallback from './Fallback';
