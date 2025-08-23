@@ -5,9 +5,9 @@ import { JikanApiResponse, MainPageProps } from '@/types/types';
 import { API } from '@/types/constants';
 
 const MainPage = async ({ searchParams }: MainPageProps): Promise<JSX.Element> => {
-  const params = await Promise.resolve(searchParams);
+  const params = await searchParams;
   const query = params.q || '';
-  const page = 1;
+  const page = params.page ? parseInt(params.page) : 1;
   const url = query
     ? `${API.BASE}${API.SEARCH}?q=${encodeURIComponent(query)}&page=${page}`
     : `${API.BASE}${API.SEASONS}?page=${page}`;

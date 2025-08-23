@@ -61,7 +61,7 @@ export type FallbackProps = {
 
 export type LocaleLayoutProps = {
   children: ReactNode;
-  params: { locale: 'en' | 'by' };
+  params: Promise<{ locale: 'en' | 'by' }>;
 };
 
 export type JikanApiResponse = {
@@ -127,5 +127,5 @@ export type ProviderProps = {
 };
 
 export type MainPageProps = {
-  searchParams: { q?: string; page?: string };
+  searchParams: Promise<{ q?: string; page?: string }>;
 };

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
-  const { locale } = await Promise.resolve(params);
+  const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
