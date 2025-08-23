@@ -29,7 +29,7 @@ const CardDetails = (props: DetailsProps): JSX.Element => {
             <Image
               alt={card?.title}
               loading="lazy"
-              layout="fill"
+              fill
               src={card?.images?.webp?.large_image_url}
               className="absolute w-full h-full object-cover"
             />

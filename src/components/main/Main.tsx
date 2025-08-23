@@ -10,9 +10,9 @@ import { useGetAnimeSearchQuery, useGetSeasonTopQuery } from '@/store/api/apiSli
 import { extractErrorMessage } from '@/utils/utils';
 import { MainProps } from '@/types/types';
 
-const Main = ({ initialData, initialPage }: MainProps): JSX.Element => {
+const Main = ({ initialData, initialPage, initialQuery }: MainProps): JSX.Element => {
   const { getParam, setParams } = useUrlParams();
-  const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
+  const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', initialQuery);
   const { currentPage, changePage } = usePagination();
 
   const {
@@ -38,6 +38,7 @@ const Main = ({ initialData, initialPage }: MainProps): JSX.Element => {
   const data = useMemo(() => {
     return searchQuery.trim() ? searchData : currentPage === initialPage ? initialData : seasonData;
   }, [searchQuery, currentPage, initialPage, initialData, searchData, seasonData]);
+
   const error = searchQuery.trim() ? searchError : currentPage === initialPage ? null : seasonError;
   const isLoading = searchQuery.trim()
     ? isSearchLoading

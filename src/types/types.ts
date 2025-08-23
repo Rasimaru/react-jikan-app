@@ -117,10 +117,15 @@ export type RefreshButtonProps = {
 export type MainProps = {
   initialData: JikanApiResponse;
   initialPage: number;
+  initialQuery: string;
 };
 
 export type ProviderProps = {
   children: ReactNode;
   locale: string;
   messages: Record<string, string>;
+};
+
+export type MainPageProps = {
+  searchParams: { q?: string; page?: string };
 };
