@@ -13,6 +13,7 @@ const config: Config = {
   ],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/tests/mocks/setupMocks.ts',
     '^@/(.*)$': '<rootDir>/src/$1'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],

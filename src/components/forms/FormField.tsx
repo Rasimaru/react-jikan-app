@@ -134,7 +134,11 @@ function FormField(props: FormFieldProps) {
           {label}
           <div className="flex gap-4">
             {options.map((opt) => (
-              <label key={opt.value} className="flex items-center gap-2 hover:cursor-pointer">
+              <label
+                htmlFor={`${name}-${opt.value}`}
+                key={opt.value}
+                className="flex items-center gap-2 hover:cursor-pointer"
+              >
                 <input
                   type="radio"
                   id={`${name}-${opt.value}`}

@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react';
 import FormField, { type FormOption } from './FormField';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPicture, selectCountries } from '@/store/formSlice';
+
 import * as Yup from 'yup';
-import schema from './Schema';
+
+import { selectCountries, setPicture } from '../../store/formSlice';
+import schema from './schema';
 
 const genderOptions: FormOption[] = [
   { value: 'male', label: 'Male' },
@@ -77,7 +79,12 @@ export default function UncontrolledForm({ onSubmit }: UncontrolledFormProps) {
         <div className="border-b px-6 py-4">
           <h2 className="text-center text-xl font-semibold">Uncontrolled Form</h2>
         </div>
-        <form ref={formRef} onSubmit={handleSubmit} className="px-6 py-6 text-left">
+        <form
+          data-testid="uncontrolled-form"
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="px-6 py-6 text-left"
+        >
           <FormField label="Name" name="name" type="text" error={errors.name} />
           <FormField label="Age" name="age" type="number" error={errors.age} />
           <FormField label="Email" name="email" type="email" error={errors.email} />

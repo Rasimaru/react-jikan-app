@@ -1,7 +1,7 @@
 import Layout from './components/layout/Layout';
 import { useState } from 'react';
 import Modal from './components/forms/Modal';
-import UncontrolledForm from './components/forms/UncontroledForm';
+import UncontrolledForm from './components/forms/UncontrolledForm';
 import HookForm from './components/forms/HookForm';
 import CardItem from './components/forms/CardItem';
 

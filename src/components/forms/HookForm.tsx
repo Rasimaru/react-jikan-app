@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import FormField, { type FormOption } from './FormField';
 import { setPicture, selectCountries } from '@/store/formSlice';
-import schema from './Schema';
+import schema from './schema';
 
 type FormValues = {
   name: string;
@@ -70,7 +70,11 @@ export default function HookForm({ onSubmit }: HookFormProps) {
         <div className="border-b px-6 py-4">
           <h2 className="text-center text-xl font-semibold">Controlled Form</h2>
         </div>
-        <form onSubmit={handleSubmit(submitForm)} className="px-6 py-6 text-left">
+        <form
+          data-testid="hook-form"
+          onSubmit={handleSubmit(submitForm)}
+          className="px-6 py-6 text-left"
+        >
           <FormField
             label="Name"
             name="name"
