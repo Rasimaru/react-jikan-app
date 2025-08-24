@@ -59,7 +59,8 @@ function FormField(props: FormFieldProps) {
     };
     reader.readAsDataURL(file);
 
-    if (onChangeUncontrolled) onChangeUncontrolled(e);
+    registration?.onChange?.(e);
+    onChangeUncontrolled?.(e);
   };
 
   return (
@@ -115,7 +116,10 @@ function FormField(props: FormFieldProps) {
             />
             <button
               type="button"
-              onClick={handleToggle}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                handleToggle();
+              }}
               onBlur={() => setShow(false)}
               aria-label={`${label || name} visibility switch`}
               className="absolute top-0 right-0 flex justify-center items-center bg-neutral-900 hover:bg-amber-500 focus:bg-amber-300 focus:text-black hover:cursor-pointer duration-300 w-10 h-10 rounded-r-md text-white hover:text-black"
@@ -187,11 +191,8 @@ function FormField(props: FormFieldProps) {
                 name={name}
                 accept="image/png,image/jpeg"
                 className="hover:cursor-pointer hover:bg-amber-300"
-                onChange={(e) => {
-                  handleFileChange(e);
-                  onChangeUncontrolled?.(e);
-                }}
-                {...registration}
+                onChange={handleFileChange}
+                ref={registration?.ref}
               />
             </div>
           </label>

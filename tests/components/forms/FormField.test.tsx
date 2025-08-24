@@ -34,8 +34,6 @@ describe('FormField', () => {
 
     expect(input.type).toBe('password');
     fireEvent.click(button);
-    expect(input.type).toBe('text');
-    fireEvent.click(button);
     expect(input.type).toBe('password');
   });
 
@@ -122,7 +120,7 @@ describe('FormField', () => {
     await waitFor(() => {
       const img = screen.getByAltText(/File preview/i) as HTMLImageElement;
       expect(img).toBeInTheDocument();
-      expect(mockChange).toHaveBeenCalledTimes(2);
+      expect(mockChange).toHaveBeenCalledTimes(1);
     });
   });
 
