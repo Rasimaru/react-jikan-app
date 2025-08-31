@@ -1,39 +1,78 @@
-import { useEffect, useState, type JSX } from 'react';
+import { useCallback, useMemo, useState, type JSX } from 'react';
 import { ResultsControls } from '@/components/ResultsControls';
 import { ResultsList } from '@/components/ResultsList';
 import { ModalAddColumns } from '@/components/ModalAddColumns';
 import { getData } from './lib/getData';
-import type { CountryProps } from './types/types';
+import type { CountryProps, SortField, SortOrder } from './types/types';
+
+const lastDataYear = 2023;
 
 export default function App(): JSX.Element {
-  const [filteredCountries, setFilteredCountries] = useState<CountryProps[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number | null>(new Date().getFullYear() - 2);
+  const [selectedYear, setSelectedYear] = useState<number | null>(lastDataYear);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortField, setSortField] = useState<SortField>('name');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
   const countries: CountryProps[] = getData();
 
-  useEffect(() => {
-    setFilteredCountries(countries);
+  const filteredCountries = useMemo(() => {
+    let result = countries;
+
+    if (searchQuery.trim()) {
+      result = result.filter((country) =>
+        country.country.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    result = [...result].sort((a, b) => {
+      if (sortField === 'name') {
+        return sortOrder === 'asc'
+          ? a.country.localeCompare(b.country)
+          : b.country.localeCompare(a.country);
+      } else {
+        const popA = a.data.find((data) => data.year === selectedYear)?.population ?? 0;
+        const popB = b.data.find((data) => data.year === selectedYear)?.population ?? 0;
+        return sortOrder === 'asc' ? popA - popB : popB - popA;
+      }
+    });
+
+    return result;
+  }, [countries, searchQuery, selectedYear, sortField, sortOrder]);
+
+  const toggleModal = useCallback((): void => {
+    setIsModalOpen((isModalOpen) => !isModalOpen);
   }, []);
 
-  const toggleModal = (): void => {
-    setIsModalOpen((isModalOpen) => !isModalOpen);
-  };
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
+
+  const handleYearChange = useCallback((year: number | null) => {
+    setSelectedYear(year);
+  }, []);
+
+  const handleSortChange = useCallback(
+    (field: SortField) => {
+      if (field === sortField) {
+        setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+      } else {
+        setSortField(field);
+        setSortOrder('asc');
+      }
+    },
+    [sortField, sortOrder]
+  );
 
   return (
     <div className="container p-4 mx-auto">
       <ResultsControls
-        countries={countries}
         selectedYear={selectedYear}
-        onYearChange={setSelectedYear}
+        onYearChange={handleYearChange}
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        setFilteredCountries={setFilteredCountries}
-        selectedColumns={selectedColumns}
-        setSelectedColumns={setSelectedColumns}
+        onSearchChange={handleSearchChange}
         openModal={toggleModal}
       />
 
@@ -51,6 +90,9 @@ export default function App(): JSX.Element {
         setSelectedCountry={setSelectedCountry}
         selectedYear={selectedYear}
         selectedColumns={selectedColumns}
+        sortField={sortField}
+        sortOrder={sortOrder}
+        onSortChange={handleSortChange}
       />
     </div>
   );

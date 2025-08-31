@@ -1,12 +1,12 @@
+import { useEffect, useState, memo, type JSX } from 'react';
 import type { DetailsProps } from '@/types/types';
-import { useEffect, useState, type JSX } from 'react';
 
-export function ResultsDetails(props: DetailsProps): JSX.Element {
+export const ResultsDetails = memo(function ResultsDetails(props: DetailsProps): JSX.Element {
   const { country, selectedYear, selectedColumns = [] } = props;
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
   const filteredData = selectedYear
-    ? country.data.filter((d) => d.year === selectedYear)
+    ? country.data.filter((data) => data.year === selectedYear)
     : country.data;
 
   useEffect(() => {
@@ -51,4 +51,4 @@ export function ResultsDetails(props: DetailsProps): JSX.Element {
       </table>
     </div>
   );
-}
+});

@@ -1,13 +1,20 @@
-import { Fragment, useEffect, useState, type JSX } from 'react';
-import type { ResultsProps, SortField, SortOrder } from '@/types/types';
+import { Fragment, useEffect, useState, memo, type JSX } from 'react';
+import type { ResultsProps } from '@/types/types';
 import { ResultsDetails } from './ResultsDetails';
 import { ArrowDown, ArrowUp } from 'lucide-react';
 
-export function ResultsList(props: ResultsProps): JSX.Element {
-  const { countries, selectedCountry, setSelectedCountry, selectedYear, selectedColumns } = props;
+export const ResultsList = memo(function ResultsList(props: ResultsProps): JSX.Element {
+  const {
+    countries,
+    selectedCountry,
+    setSelectedCountry,
+    selectedYear,
+    selectedColumns,
+    sortField,
+    sortOrder,
+    onSortChange
+  } = props;
 
-  const [sortField, setSortField] = useState<SortField>('name');
-  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
   useEffect(() => {
@@ -18,34 +25,13 @@ export function ResultsList(props: ResultsProps): JSX.Element {
     }
   }, [selectedYear]);
 
-  const sortedCountries = [...countries].sort((a, b) => {
-    if (sortField === 'name') {
-      return sortOrder === 'asc'
-        ? a.country.localeCompare(b.country)
-        : b.country.localeCompare(a.country);
-    } else {
-      const popA = a.data.find((data) => data.year === selectedYear)?.population ?? 0;
-      const popB = b.data.find((data) => data.year === selectedYear)?.population ?? 0;
-      return sortOrder === 'asc' ? popA - popB : popB - popA;
-    }
-  });
-
-  const toggleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortOrder('asc');
-    }
-  };
-
   return (
     <table className="border-collapse border w-full text-left">
       <thead>
         <tr>
           <th
             className="cursor-pointer px-2 py-1 hover:bg-blue-500 hover:text-white duration-300"
-            onClick={() => toggleSort('name')}
+            onClick={() => onSortChange('name')}
           >
             <div className="flex gap-2">
               Name {sortField === 'name' ? sortOrder === 'asc' ? <ArrowUp /> : <ArrowDown /> : ''}
@@ -53,7 +39,7 @@ export function ResultsList(props: ResultsProps): JSX.Element {
           </th>
           <th
             className="cursor-pointer px-2 py-1 border text-center hover:bg-blue-500 hover:text-white duration-300"
-            onClick={() => toggleSort('population')}
+            onClick={() => onSortChange('population')}
           >
             <div className="flex gap-2 justify-center">
               Population{' '}
@@ -64,10 +50,10 @@ export function ResultsList(props: ResultsProps): JSX.Element {
         </tr>
       </thead>
       <tbody>
-        {sortedCountries.map((country) => {
+        {countries.map((country) => {
           const isOpen = selectedCountry === country.country;
           const population =
-            country.data.find((data) => data.year === selectedYear)?.population ?? '-';
+            country.data.find((data) => data.year === selectedYear)?.population ?? 'N/A';
 
           return (
             <Fragment key={country.country}>
@@ -98,4 +84,4 @@ export function ResultsList(props: ResultsProps): JSX.Element {
       </tbody>
     </table>
   );
-}
+});

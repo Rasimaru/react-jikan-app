@@ -1,5 +1,3 @@
-import type { Dispatch } from 'react';
-
 export type CountryData = {
   year: number;
   population?: number;
@@ -15,14 +13,10 @@ export type CountryProps = {
 };
 
 export type ControlsProps = {
-  countries: CountryProps[];
   selectedYear: number | null;
-  onYearChange: (year: number) => void;
+  onYearChange: (year: number | null) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  setFilteredCountries: Dispatch<React.SetStateAction<CountryProps[]>>;
-  selectedColumns: string[];
-  setSelectedColumns: (cols: string[]) => void;
   openModal: () => void;
 };
 
@@ -51,6 +45,9 @@ export type ResultsProps = {
   setSelectedCountry: (country: string) => void;
   selectedYear: number | null;
   selectedColumns: string[];
+  sortField: SortField;
+  sortOrder: SortOrder;
+  onSortChange: (field: SortField) => void;
 };
 
 export type SortField = 'name' | 'population';
