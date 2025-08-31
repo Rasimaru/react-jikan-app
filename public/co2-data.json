@@ -1,0 +1,62 @@
+{
+  "Poland": {
+    "iso_code": "POL",
+    "region": "Europe",
+    "data": [
+      { "year": 1800, "population": 9000000, "co2": 0.4, "co2_per_capita": 0.04 },
+      {
+        "year": 2023,
+        "population": 38762847,
+        "co2": 289.28,
+        "co2_per_capita": 7.46,
+        "methane": 45.08,
+        "oil_co2": 91.43
+      }
+    ]
+  },
+  "Germany": {
+    "iso_code": "DEU",
+    "region": "Europe",
+    "data": [
+      { "year": 1800, "population": 24000000, "co2": 1.2, "co2_per_capita": 0.05 },
+      {
+        "year": 2023,
+        "population": 83240525,
+        "co2": 604.1,
+        "co2_per_capita": 7.25,
+        "methane": 51.2,
+        "oil_co2": 157.32
+      }
+    ]
+  },
+  "France": {
+    "iso_code": "FRA",
+    "region": "Europe",
+    "data": [
+      { "year": 1800, "population": 29000000, "co2": 0.9, "co2_per_capita": 0.03 },
+      {
+        "year": 2023,
+        "population": 68233216,
+        "co2": 302.55,
+        "co2_per_capita": 4.43,
+        "methane": 39.5,
+        "oil_co2": 110.12
+      }
+    ]
+  },
+  "Japan": {
+    "iso_code": "JPN",
+    "region": "Asia",
+    "data": [
+      { "year": 1800, "population": 31000000, "co2": 0.7, "co2_per_capita": 0.02 },
+      {
+        "year": 2023,
+        "population": 123294513,
+        "co2": 1061.3,
+        "co2_per_capita": 8.6,
+        "methane": 35.8,
+        "oil_co2": 420.7
+      }
+    ]
+  }
+}

@@ -1,50 +1,124 @@
-# React Jikan App
+# Countries Data
 
-[![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black&style=for-the-badge)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white&style=for-the-badge)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwind-css&logoColor=white&style=for-the-badge)](https://tailwindcss.com/)
-[![ESLint](https://img.shields.io/badge/ESLint-4B32C3?logo=eslint&logoColor=white&style=for-the-badge)](https://eslint.org/)
-[![Prettier](https://img.shields.io/badge/Prettier-F7B93E?logo=prettier&logoColor=white&style=for-the-badge)](https://prettier.io/)
+> ## Performance Profiling
+>
+> Profiling was performed using React DevTools Profiler.
 
----
+> ## Tested interactions:
+>
+> Sorting a column  
+> Searching for a country  
+> Selecting a year  
+> Adding/removing columns
 
-## Description
+## Before optimization
 
-A feature-rich anime search platform built with React and powered by the [Jikan API](https://jikan.moe/).
+> ## Sorting a column(population):
+>
+> **Commit Duration:** 1.6s
+> **Render Duration:** 102.9ms
+> **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+>
+> ### Screenshots:
+>
+> Flame Graph for sorting
+> ![Flame Graph for sorting](./report/image-9.png)
+> Ranked Chart for sorting
+> ![Ranked Chart for sorting](./report/image-10.png)
 
-This project is part of the RS School React 2025Q3 course and will be gradually expanded in future tasks.
+> ## Searching for a country:
+>
+> **Commit Duration:** 1.2s  
+> **Render Duration:** 4.7ms  
+> **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+>
+> ### Screenshots:
+>
+> Flame Graph for search
+> ![Flame Graph for search](./report/image-8.png)
+> Ranked Chart for search
+> ![Ranked Chart for search](./report/image-11.png)
 
----
+> ## Selecting a year:
+>
+> **Commit Duration:** 3.1s  
+> **Render Duration:** 129.5ms  
+> **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+>
+> ### Screenshots:
+>
+> Flame Graph for year
+> ![Flame Graph for year](./report/image-13.png)
+> Ranked Chart for year
+> ![Ranked Chart for year](./report/image-12.png)
 
-## 🔍 Features
+> ## Adding/removing columns:
+>
+> **Commit Duration:** 3.2s  
+> **Render Duration:** 106.5ms  
+> **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+>
+> ### Screenshots:
+>
+> Flame Graph for columns
+> ![Flame Graph for adding columns](./report/image-14.png)
+> Ranked Chart for columns
+> ![Ranked Chart for adding columns](./report/image-15.png)
 
-- Anime search by title using Jikan API
-- LocalStorage integration for saving search terms
-- Display of search results (title + description)
-- Loading indicator while fetching data
-- Error handling for failed API requests (4xx / 5xx)
-- Custom error boundary with fallback UI
-- Button to simulate rendering error for testing
-- Unit testing of class components using Jest + RTL
+## After optimization
 
----
+> ## Sorting a column(population):
+>
+> **Commit Duration:** 0.8s
+> **Render Duration:** 135.1ms
+> **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+>
+> ### Screenshots:
+>
+> Flame Graph for sorting
+> ![Flame Graph for sorting](./report/image-7.png)
+> Ranked Chart for sorting
+> ![Ranked Chart for sorting](./report/image-6.png)
 
-## 🚀 Getting Started
+> ## Searching for a country:
+>
+> **Commit Duration:** 1.2s  
+> **Render Duration:** 3.4ms  
+> **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+>
+> ### Screenshots:
+>
+> Flame Graph for search  
+> ![Flame Graph for search](./report/image-4.png)
+> Ranked Chart for search
+> ![Ranked Chart for search](./report/image-5.png)
 
-> Follow these steps to run the project locally:
+> ## Selecting a year:
+>
+> **Commit Duration:** 2.7s  
+> **Render Duration:** 105.7ms  
+> **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+>
+> ### Screenshots:
+>
+> Flame Graph for year
+> ![Flame Graph for year](./report/image-2.png)
+> Ranked Chart for year
+> ![Ranked Chart for year](./report/image-3.png)
 
-### Installation
+> ## Adding/removing columns:
+>
+> **Commit Duration:** 2.2s  
+> **Render Duration:** 118.8ms  
+> **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+>
+> ### Screenshots:
+>
+> Flame Graph for columns
+> ![Flame Graph for columns](./report/image.png)
+> Ranked Chart for columns
+> ![Ranked Chart for columns](./report/image-1.png)
 
-```bash
-git clone https://github.com/Rasimaru/react-jikan-app.git
-cd react-jikan-app
-npm install
-```
-
-### Running the Application
-
-Start the development server:
-
-```bash
-npm run dev
-```
+> ## Conclusion:
+>
+> Looks like optimization reduced commit durations for heavy interactions like sorting, selecting a year, and adding/removing columns, resulting in faster overall UI updates, while light actions like search remained largely unaffected.
