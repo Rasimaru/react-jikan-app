@@ -1,7 +1,7 @@
 import { useEffect, useState, memo, type JSX } from 'react';
-import type { DetailsProps } from '@/types/types';
+import type { DetailsProps } from '@/lib/types';
 
-export const ResultsDetails = memo(function ResultsDetails(props: DetailsProps): JSX.Element {
+const ResultsDetails = memo(function ResultsDetails(props: DetailsProps): JSX.Element {
   const { country, selectedYear, selectedColumns = [] } = props;
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
@@ -42,7 +42,7 @@ export const ResultsDetails = memo(function ResultsDetails(props: DetailsProps):
               <td className="border px-2 py-1">{entry.co2PerCapita?.toFixed(3) ?? 'N/A'}</td>
               {selectedColumns.map((col) => (
                 <td key={col} className="border px-2 py-1">
-                  {entry[col]?.toFixed(3) ?? '-'}
+                  {entry[col]?.toFixed(3) ?? 'N/A'}
                 </td>
               ))}
             </tr>
@@ -52,3 +52,5 @@ export const ResultsDetails = memo(function ResultsDetails(props: DetailsProps):
     </div>
   );
 });
+
+export default ResultsDetails;

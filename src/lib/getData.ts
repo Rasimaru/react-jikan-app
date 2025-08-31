@@ -1,4 +1,4 @@
-import type { CountryProps, CountryData, RawCountryProps } from '@/types/types';
+import type { CountryProps, CountryData, RawCountryProps } from '@/lib/types';
 
 let cache: CountryProps[] | null = null;
 let pending: Promise<void> | null = null;

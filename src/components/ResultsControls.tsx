@@ -1,8 +1,8 @@
-import type { ControlsProps } from '@/types/types';
+import type { ControlsProps } from '@/lib/types';
 import type { ChangeEvent, JSX } from 'react';
 import { memo } from 'react';
 
-export const ResultsControls = memo(function ResultsControls(props: ControlsProps): JSX.Element {
+const ResultsControls = memo(function ResultsControls(props: ControlsProps): JSX.Element {
   const { selectedYear, onYearChange, searchQuery, onSearchChange, openModal } = props;
 
   const handleYearChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,3 +42,5 @@ export const ResultsControls = memo(function ResultsControls(props: ControlsProp
     </div>
   );
 });
+
+export default ResultsControls;

@@ -1,15 +1,14 @@
 import { useCallback, useMemo, useState, type JSX } from 'react';
-import { ResultsControls } from '@/components/ResultsControls';
-import { ResultsList } from '@/components/ResultsList';
-import { ModalAddColumns } from '@/components/ModalAddColumns';
+import ResultsControls from '@/components/ResultsControls';
+import ResultsList from '@/components/ResultsList';
+import ColumnsModal from './components/ColumnsModal';
 import { getData } from './lib/getData';
-import type { CountryProps, SortField, SortOrder } from './types/types';
-
-const lastDataYear = 2023;
+import type { CountryProps, SortField, SortOrder } from './lib/types';
+import { LAST_YEAR } from './lib/constants';
 
 export default function App(): JSX.Element {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number | null>(lastDataYear);
+  const [selectedYear, setSelectedYear] = useState<number | null>(LAST_YEAR);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -77,7 +76,7 @@ export default function App(): JSX.Element {
       />
 
       {isModalOpen && (
-        <ModalAddColumns
+        <ColumnsModal
           selectedColumns={selectedColumns}
           onChange={setSelectedColumns}
           onClose={toggleModal}

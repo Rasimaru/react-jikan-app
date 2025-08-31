@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState, memo, type JSX } from 'react';
-import type { ResultsProps } from '@/types/types';
-import { ResultsDetails } from './ResultsDetails';
+import type { ResultsProps } from '@/lib/types';
+import ResultsDetails from './ResultsDetails';
 import { ArrowDown, ArrowUp } from 'lucide-react';
 
-export const ResultsList = memo(function ResultsList(props: ResultsProps): JSX.Element {
+const ResultsList = memo(function ResultsList(props: ResultsProps): JSX.Element {
   const {
     countries,
     selectedCountry,
@@ -85,3 +85,5 @@ export const ResultsList = memo(function ResultsList(props: ResultsProps): JSX.E
     </table>
   );
 });
+
+export default ResultsList;

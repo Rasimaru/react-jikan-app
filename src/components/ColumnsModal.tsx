@@ -1,17 +1,8 @@
-import type { ModalProps } from '@/types/types';
+import { EXTRA_COLUMNS } from '@/lib/constants';
+import type { ModalProps } from '@/lib/types';
 import { useState, type JSX } from 'react';
 
-const AVAILABLE_FIELDS = [
-  'methane',
-  'methane_per_capita',
-  'nitrous_oxide',
-  'temperature_change_from_co2',
-  'oil_co2',
-  'total_ghg',
-  'land_use_change_co2'
-];
-
-export function ModalAddColumns(props: ModalProps): JSX.Element {
+const ColumnsModal = (props: ModalProps): JSX.Element => {
   const { onClose, selectedColumns = [], onChange } = props;
   const [columns, setColumns] = useState<string[]>(selectedColumns);
 
@@ -33,7 +24,7 @@ export function ModalAddColumns(props: ModalProps): JSX.Element {
       <div className="bg-white p-4 rounded w-96">
         <h2 className="text-lg font-bold mb-2">Add Columns</h2>
         <div className="flex flex-col gap-1 max-h-60 overflow-auto">
-          {AVAILABLE_FIELDS.map((col) => (
+          {EXTRA_COLUMNS.map((col) => (
             <label key={col} className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
@@ -61,4 +52,6 @@ export function ModalAddColumns(props: ModalProps): JSX.Element {
       </div>
     </div>
   );
-}
+};
+
+export default ColumnsModal;
